@@ -15,13 +15,15 @@ namespace JobSearch.Controllers
         [HttpGet("/jobs/all")]
         public ActionResult All()
         {
-            return View();
+            List<IndeedClass> model = new List<IndeedClass>();
+            return View(model);
         }
 
         [HttpGet("/jobs/stackoverflow")]
         public ActionResult StackOverflow()
         {
-            return View();
+            List<IndeedClass> model = new List<IndeedClass>();
+            return View(model);
         }
 
         [HttpGet("/jobs/indeed")]

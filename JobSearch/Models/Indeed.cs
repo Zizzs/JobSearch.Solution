@@ -59,14 +59,14 @@ namespace JobSearch.Models
             string tempTitle ="";
             string tempLink = "";
             
-            for(int i =1; i < 5; i++)
+            for(int i =1; i < 8; i++)
             {
                 var tempListing = driver.FindElementById("sja" +i); 
                 tempTitle = tempListing.Text;
                 tempLink = tempListing.GetAttribute("href");
                 IndeedClass tempJob = new IndeedClass(tempTitle, tempLink);
                 indeedJobs.Add(tempJob);
-           }
+            }
 
           
 

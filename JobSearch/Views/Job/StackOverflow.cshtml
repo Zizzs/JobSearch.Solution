@@ -9,10 +9,12 @@
     <li><a class="nav-link" href = "/jobs/indeed">Indeed</a></li>
   </ul>
 </div>
+<br>
+<img class="logo" src="~/img/stackoverflow.png">
+<br>
 <div class="wrapper">
-  <div class="formClass">
-    <p>Search ALL websites for specific Job Title</p>
-    <p>Current Websites: Stack Overflow, Indeed</p>
+  <div id="formLeft" class="formClass">
+    <p>Search Indeed By Job TItle and Job Location</p>
     <form action = "/jobs/indeed" method="post">
             <label for='jobName'>Job Title</label>
             <input id='jobName' name='jobName' type='text' required><br>
@@ -21,7 +23,13 @@
             <button type='submit'>Find a job</button>
     </form>
   </div>
-  <div>
-    
+  <div class="formClass">
+    <p>Output</p>
+    <ul>
+    @foreach(IndeedClass job in @Model)
+    {
+      <a href="@job.GetUrl()"><h2>@job.GetTitle()</h2></a>
+    }
+    </ul>
   </div>
 </div>
