@@ -7,6 +7,7 @@ using System.Text;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 
+
 namespace JobSearch.Models
 {
     public class IndeedClass
@@ -66,16 +67,41 @@ namespace JobSearch.Models
                 tempLink = tempListing.GetAttribute("href");
                 IndeedClass tempJob = new IndeedClass(tempTitle, tempLink);
                 indeedJobs.Add(tempJob);
-            }
+           }
 
-          
+            var nextLink = driver.FindElementByXPath("//*[@id='resultsCol']/div[28]/a[1]/span");
+                        nextLink.Click();
 
+           while(indeedJobs.Count <10)
+           {
+               try
+               {
+                    for(int j= 7; j<8; j++)   
+                   {
+                        var tempListing2 = driver.FindElementById("sja" +j); 
+                        tempTitle = tempListing2.Text;
+                        tempLink = tempListing2.GetAttribute("href");
+                        IndeedClass tempJob = new IndeedClass(tempTitle, tempLink);
+                        indeedJobs.Add(tempJob);
+                   }  
+               }
+               catch
+               {
+                   for(int j= 7; j<8; j++)  
+                   {
+                        var thirdLink = driver.FindElementByXPath("//*[@id='resultsCol']/div[28]/a[3]");
+                        var tempListing3 = driver.FindElementById("sja" +j); 
+                        tempTitle = tempListing3.Text;
+                        tempLink = tempListing3.GetAttribute("href");
+                        IndeedClass tempJob = new IndeedClass(tempTitle, tempLink);
+                        indeedJobs.Add(tempJob);
+                   }
+                
+
+               }
+           }
 
             return indeedJobs;
-   
-            // // Extract the text and save it into result.txt
-            // var result = driver.FindElementByXPath("//div[@id='case_login']/h3").Text;
-            // File.WriteAllText("result.txt", result);
         }
     }
 }
