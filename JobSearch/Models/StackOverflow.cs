@@ -11,8 +11,24 @@ namespace JobSearch.Models
 {
     public class StackOverflow
     {
+        private string _title;
+        private string _url;
+        public StackOverflow(string title, string url)
+        {
+            _title = title;
+            _url = url;
+        }
+        public string GetTitle()
+        {
+            return _title;
+        }
+
+        public string GetUrl()
+        {
+            return _url;
+        }
         // Initialize the Chrome Driver
-        public static void RunSearch()
+        public static List<StackOverflow> RunSearch()
         {
 
             ChromeDriver driver = new ChromeDriver("/Users/Guest/Desktop/JobSearch.Solution/JobSearch/wwwroot/drivers");
@@ -32,18 +48,22 @@ namespace JobSearch.Models
             // and click the login button
             searchForm.Submit();
 
+            List<StackOverflow> stackOverflowJobs = new List<StackOverflow> { };
+            string tempTitle = "";
+            string tempLink = "";
+
+            for (int i = 1; i < 5; i++)
+            {
+                var tempListing = driver.FindElementById("sja" + i);
+                tempTitle = tempListing.Text;
+                tempLink = tempListing.GetAttribute("href");
+                StackOverflow tempJob = new StackOverflow(tempTitle, tempLink);
+                stackOverflowJobs.Add(tempJob);
+            }
+            return stackOverflowJobs;
             // Extract the text and save it into result.txt
-            var result = driver.FindElementById("h2");
-            var resultText = result.Text;
-            File.WriteAllText("result.txt", resultText);
+            // File.WriteAllText("result.txt", resultText);
 
-            // ("//*[@id='mainbar']/div[2]/div/div[3]/div[3]/div[1]/h2/a").Text;
-            // foreach (var result in results)
-            // {
-
-            //     string resultText = result.Text;
-            //     File.WriteAllText("result.txt", resultText);
-            // }
 
         }
     }
