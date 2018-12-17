@@ -28,7 +28,7 @@ namespace JobSearch.Models
             return _url;
         }
         // Initialize the Chrome Driver
-        public static List<StackOverflow> RunSearch()
+        public static List<StackOverflow> RunSearch(string jobName, string jobLocation)
         {
 
             ChromeDriver driver = new ChromeDriver("/Users/Guest/Desktop/JobSearch.Solution/JobSearch/wwwroot/drivers");
@@ -42,8 +42,8 @@ namespace JobSearch.Models
             var searchFormLocation = driver.FindElementById("l");
 
             // Type user name and password
-            searchForm.SendKeys("Junior Web Developer");
-            searchFormLocation.SendKeys("Seattle WA, USA");
+            searchForm.SendKeys(jobName);
+            searchFormLocation.SendKeys(jobLocation);
 
             // and click the login button
             searchForm.Submit();
@@ -52,19 +52,38 @@ namespace JobSearch.Models
             string tempTitle = "";
             string tempLink = "";
 
-            for (int i = 1; i < 5; i++)
+            try
             {
-                var tempListing = driver.FindElementById("sja" + i);
-                tempTitle = tempListing.Text;
-                tempLink = tempListing.GetAttribute("href");
-                StackOverflow tempJob = new StackOverflow(tempTitle, tempLink);
-                stackOverflowJobs.Add(tempJob);
+                for (int i = 3; i < 9; i++)
+                {
+                    var tempListing = driver.FindElementByXPath("//*[@id='mainbar']/div[2]/div/div[" + i + "]/div[3]/div[1]/h2/a");
+                    tempTitle = tempListing.Text;
+                    tempLink = tempListing.GetAttribute("href");
+                    StackOverflow tempJob = new StackOverflow(tempTitle, tempLink);
+                    stackOverflowJobs.Add(tempJob);
+                }
+            }
+            catch
+            {
+                for (int i = 3; i < 9; i++)
+                {
+                    var tempListing = driver.FindElementByXPath("//*[@id='mainbar']/div[2]/div/div[" + i + "]/div[3]/div[1]/h2/a");
+                    tempTitle = tempListing.Text;
+                    tempLink = tempListing.GetAttribute("href");
+                    StackOverflow tempJob = new StackOverflow(tempTitle, tempLink);
+                    stackOverflowJobs.Add(tempJob);
+                }
             }
             return stackOverflowJobs;
             // Extract the text and save it into result.txt
             // File.WriteAllText("result.txt", resultText);
+            //*[@id="mainbar"]/div[2]/div/div[8]/div[3]/div[1]/h2/a
+            //*[@id="mainbar"]/div[2]/div/div[7]/div[3]/div[1]/h2/a
+            //*[@id="mainbar"]/div[2]/div/div[6]/div[3]/div[1]/h2/a
+            //*[@id="mainbar"]/div[2]/div/div[3]/div[3]/div[1]/h2/a
 
-
+            //*[@id="mainbar"]/div[2]/div/div[1]/div[3]/div[1]/h2/a
+            //*[@id="mainbar"]/div[2]/div/div[3]/div[3]/div[1]/h2/a
         }
     }
 }
