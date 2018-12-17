@@ -1,0 +1,12 @@
+.wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 1em;
+    grid-row-gap: 1em;
+    border: 1px solid black;
+    background-color: coral;
+}
+
+.formClass {
+    border: 1px solid purple;
+}
