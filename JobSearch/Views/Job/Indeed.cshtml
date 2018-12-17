@@ -22,6 +22,11 @@
     </form>
   </div>
   <div>
-    
+    <ul>
+    @foreach(IndeedClass job in @Model)
+    {
+      <a href="@job.GetUrl()"><h2>@job.GetTitle()</h2></a>
+    }
+    </ul>
   </div>
 </div>
