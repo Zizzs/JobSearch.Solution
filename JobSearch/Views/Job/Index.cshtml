@@ -4,27 +4,11 @@
 
 
 <div class="container">
-<<<<<<< HEAD
-    <h3>Job Search</h3>
-    <form action = "/jobs" method="post">
-            <label for='jobName'>Job Name</label>
-            <input id='jobName' name='jobName' type='text' required><br>
-            <button type='submit'>Find a job</button>
-    </form>
-  <ul>
-    @foreach(var job in @Model)
-  
-    {
-      <a href="@job.GetUrl()"><h2>@job.GetTitle()</h2></a>
-    }
-    </ul>
-=======
   <ul class="nav nav-tabs nav-justified">
     <li><a class="nav-link" href = "/jobs/all">All</a></li>
     <li><a class="nav-link" href = "/jobs/stackoverflow">Stack OverFlow</a></li>
     <li><a class="nav-link" href = "/jobs/indeed">Indeed</a></li>
   </ul>
->>>>>>> 15be08b12a98c323d60f2fd474c52e82498f125b
 </div>
 <br>
 
