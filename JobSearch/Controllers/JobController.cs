@@ -4,9 +4,9 @@ using JobSearch.Models;
 
 namespace JobSearch.Controllers
 {
-    public class HomeController : Controller
+    public class JobController : Controller
     {
-        [HttpGet("/")]
+        [HttpGet("/jobs")]
         public ActionResult Index()
         {
             return View();
