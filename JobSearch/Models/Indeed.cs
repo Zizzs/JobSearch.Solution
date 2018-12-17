@@ -9,7 +9,7 @@ using OpenQA.Selenium.Chrome;
 
 namespace JobSearch.Models
 {
-    class IndeedClass
+    public class IndeedClass
     {
         private string _title;
         private string _url;
@@ -30,7 +30,7 @@ namespace JobSearch.Models
             return _url;
         }
         // Initialize the Chrome Driver
-        public static List<IndeedClass> RunSearch()
+        public static List<IndeedClass> RunSearch(string jobName, string jobLocation)
         {
 
             ChromeDriver driver = new ChromeDriver("/Users/Guest/Desktop/JobSearch.Solution/JobSearch/wwwroot/drivers");
@@ -44,20 +44,16 @@ namespace JobSearch.Models
             
 
             // Type user name and password
-            searchForm.SendKeys("Web Developer");
+            searchForm.SendKeys(jobName);
             locationForm.SendKeys("");
             for(int i =0; i <20; i++)
             {
                locationForm.SendKeys(Keys.Backspace);
             }
-            locationForm.SendKeys("Portland, OR");
+            locationForm.SendKeys(jobLocation);
 
             // and click the login button
             searchForm.Submit();
-
-
-            driver.Navigate().GoToUrl("https://www.indeed.com/jobs?q=Web+Developer&l=Portland%2C+OR");
-            
             
             List<IndeedClass> indeedJobs = new List<IndeedClass>{};
             string tempTitle ="";
@@ -65,11 +61,11 @@ namespace JobSearch.Models
             
             for(int i =1; i < 5; i++)
             {
-            var tempListing = driver.FindElementById("sja" +i); 
-              tempTitle = tempListing.Text;
-              tempLink = tempListing.GetAttribute("href");
-            IndeedClass tempJob = new IndeedClass(tempTitle, tempLink);
-            indeedJobs.Add(tempJob);
+                var tempListing = driver.FindElementById("sja" +i); 
+                tempTitle = tempListing.Text;
+                tempLink = tempListing.GetAttribute("href");
+                IndeedClass tempJob = new IndeedClass(tempTitle, tempLink);
+                indeedJobs.Add(tempJob);
            }
 
           

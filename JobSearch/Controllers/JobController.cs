@@ -9,8 +9,7 @@ namespace JobSearch.Controllers
         [HttpGet("/jobs")]
         public ActionResult Index()
         {
-            List<IndeedClass> newList = IndeedClass.RunSearch();
-            return View(newList);
+            return View();
         }
 
         [HttpGet("/jobs/all")]
@@ -28,7 +27,15 @@ namespace JobSearch.Controllers
         [HttpGet("/jobs/indeed")]
         public ActionResult Indeed()
         {
-            return View();
+            List<IndeedClass> model = new List<IndeedClass>();
+            return View(model);
+        }
+
+        [HttpPost("/jobs/indeed")]
+        public ActionResult IndeedSearch(string jobName, string jobLocation)
+        {
+            List<IndeedClass> model = IndeedClass.RunSearch(jobName, jobLocation);
+            return View("Indeed", model);
         }
 
     }
