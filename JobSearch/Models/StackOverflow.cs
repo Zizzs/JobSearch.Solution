@@ -9,7 +9,7 @@ using OpenQA.Selenium.Chrome;
 
 namespace JobSearch.Models
 {
-    public class JobSearchClass
+    public class StackOverflow
     {
         // Initialize the Chrome Driver
         public static void RunSearch()
