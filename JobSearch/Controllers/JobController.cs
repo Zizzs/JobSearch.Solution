@@ -9,8 +9,8 @@ namespace JobSearch.Controllers
         [HttpGet("/jobs")]
         public ActionResult Index()
         {
-            JobSearchClass.RunSearch();
-            return View();
+            List<Indeed> newList = Indeed.RunSearch();
+            return View(newList);
         }
     }
 }

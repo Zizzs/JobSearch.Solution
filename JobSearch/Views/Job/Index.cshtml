@@ -9,4 +9,11 @@
             <input id='jobName' name='jobName' type='text' required><br>
             <button type='submit'>Find a job</button>
     </form>
+  <ul>
+    @foreach(var job in @Model)
+  
+    {
+      <a href="@job.GetUrl()"><h2>@job.GetTitle()</h2></a>
+    }
+    </ul>
 </div>
