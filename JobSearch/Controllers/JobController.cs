@@ -9,8 +9,26 @@ namespace JobSearch.Controllers
         [HttpGet("/jobs")]
         public ActionResult Index()
         {
-            JobSearchClass.RunSearch();
             return View();
         }
+
+        [HttpGet("/jobs/all")]
+        public ActionResult All()
+        {
+            return View();
+        }
+
+        [HttpGet("/jobs/stackoverflow")]
+        public ActionResult StackOverflow()
+        {
+            return View();
+        }
+
+        [HttpGet("/jobs/indeed")]
+        public ActionResult Indeed()
+        {
+            return View();
+        }
+
     }
 }
