@@ -1,0 +1,15 @@
+@{
+  Layout = "_Layout";
+}
+<div class="container">
+  <ul class="nav nav-tabs nav-justified">
+    <li><a class="nav-link" href = "/jobs/all">All</a></li>
+    <li><a class="nav-link" href = "/jobs/stackoverflow">Stack OverFlow</a></li>
+    <li><a class="nav-link" href = "/jobs/indeed">Indeed</a></li>
+  </ul>
+</div>
+<form action = "/jobs" method="post">
+        <label for='jobName'>Job Name</label>
+        <input id='jobName' name='jobName' type='text' required><br>
+        <button type='submit'>Find a job</button>
+</form>
