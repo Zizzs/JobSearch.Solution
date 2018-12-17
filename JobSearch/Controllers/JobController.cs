@@ -19,11 +19,18 @@ namespace JobSearch.Controllers
         }
 
         [HttpGet("/jobs/stackoverflow")]
-        public ActionResult StackOverflow()
+        public ActionResult ShowStackOverflow()
         {
-            return View();
+            List<StackOverflow> model = new List<StackOverflow> { };
+            return View("StackOverflow", model);
         }
 
+        [HttpPost("/jobs/stackoverflow")]
+        public ActionResult StackOverflowSearch(string jobName, string jobLocation)
+        {
+            List<StackOverflow> model = StackOverflow.RunSearch(jobName, jobLocation);
+            return View("StackOverflow", model);
+        }
         [HttpGet("/jobs/indeed")]
         public ActionResult Indeed()
         {

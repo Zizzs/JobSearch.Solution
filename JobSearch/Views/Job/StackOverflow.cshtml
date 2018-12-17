@@ -13,7 +13,7 @@
   <div class="formClass">
     <p>Search ALL websites for specific Job Title</p>
     <p>Current Websites: Stack Overflow, Indeed</p>
-    <form action = "/jobs/indeed" method="post">
+    <form action = "/jobs/stackoverflow" method="post">
             <label for='jobName'>Job Title</label>
             <input id='jobName' name='jobName' type='text' required><br>
             <label for='jobLocation'>Job Location</label>
@@ -22,6 +22,17 @@
     </form>
   </div>
   <div>
-    
+     <ul>
+     @if(@Model.Count != 0)
+    {
+      @foreach(StackOverflow job in @Model)
+        {
+          <a href="@job.GetUrl()"><h2>@job.GetTitle()</h2></a>
+        }
+    } else
+    {
+      <p> </p>
+    }
+    </ul>
   </div>
 </div>
