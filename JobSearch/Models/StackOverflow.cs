@@ -54,9 +54,9 @@ namespace JobSearch.Models
 
             try
             {
-                for (int i = 1; i < 5; i++)
+                for (int i = 3; i < 9; i++)
                 {
-                    var tempListing = driver.FindElementByXPath("//*[@id='mainbar']/div[2]/div/div[4]/div[3]/div[1]/h2/a");
+                    var tempListing = driver.FindElementByXPath("//*[@id='mainbar']/div[2]/div/div[" + i + "]/div[3]/div[1]/h2/a");
                     tempTitle = tempListing.Text;
                     tempLink = tempListing.GetAttribute("href");
                     StackOverflow tempJob = new StackOverflow(tempTitle, tempLink);
@@ -65,9 +65,9 @@ namespace JobSearch.Models
             }
             catch
             {
-                for (int i = 1; i < 5; i++)
+                for (int i = 3; i < 9; i++)
                 {
-                    var tempListing = driver.FindElementByXPath("//*[@id='mainbar']/div[2]/div/div[4]/div[3]/div[1]/h2/a");
+                    var tempListing = driver.FindElementByXPath("//*[@id='mainbar']/div[2]/div/div[" + i + "]/div[3]/div[1]/h2/a");
                     tempTitle = tempListing.Text;
                     tempLink = tempListing.GetAttribute("href");
                     StackOverflow tempJob = new StackOverflow(tempTitle, tempLink);
@@ -77,8 +77,13 @@ namespace JobSearch.Models
             return stackOverflowJobs;
             // Extract the text and save it into result.txt
             // File.WriteAllText("result.txt", resultText);
+            //*[@id="mainbar"]/div[2]/div/div[8]/div[3]/div[1]/h2/a
+            //*[@id="mainbar"]/div[2]/div/div[7]/div[3]/div[1]/h2/a
+            //*[@id="mainbar"]/div[2]/div/div[6]/div[3]/div[1]/h2/a
+            //*[@id="mainbar"]/div[2]/div/div[3]/div[3]/div[1]/h2/a
 
-
+            //*[@id="mainbar"]/div[2]/div/div[1]/div[3]/div[1]/h2/a
+            //*[@id="mainbar"]/div[2]/div/div[3]/div[3]/div[1]/h2/a
         }
     }
 }
