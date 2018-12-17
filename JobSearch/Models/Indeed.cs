@@ -9,10 +9,28 @@ using OpenQA.Selenium.Chrome;
 
 namespace JobSearch.Models
 {
-    public class JobSearchClass
+    public class Indeed
     {
+        private string _title;
+        private string _url;
+
+        Indeed(string title, string url)
+        {
+            _title = title;
+            _url = url;
+        }
+
+        public string GetTitle()
+        {
+            return _title;
+        }
+
+        public string GetUrl()
+        {
+            return _url;
+        }
         // Initialize the Chrome Driver
-        public static void RunSearch()
+        public static List<Indeed> RunSearch()
         {
 
             ChromeDriver driver = new ChromeDriver("/Users/Guest/Desktop/JobSearch.Solution/JobSearch/wwwroot/drivers");
@@ -37,6 +55,28 @@ namespace JobSearch.Models
             // and click the login button
             searchForm.Submit();
 
+
+            driver.Navigate().GoToUrl("https://www.indeed.com/jobs?q=Web+Developer&l=Portland%2C+OR");
+            
+            
+            List<Indeed> indeedJobs = new List<Indeed>{};
+            string tempTitle ="";
+            string tempLink = "";
+            
+            for(int i =1; i < 5; i++)
+            {
+            var tempListing = driver.FindElementById("sja" +i); 
+              tempTitle = tempListing.Text;
+              tempLink = tempListing.GetAttribute("href");
+            Indeed tempJob = new Indeed(tempTitle, tempLink);
+            indeedJobs.Add(tempJob);
+           }
+
+          
+
+
+            return indeedJobs;
+   
             // // Extract the text and save it into result.txt
             // var result = driver.FindElementByXPath("//div[@id='case_login']/h3").Text;
             // File.WriteAllText("result.txt", result);
