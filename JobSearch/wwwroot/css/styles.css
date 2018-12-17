@@ -4,9 +4,38 @@
     grid-column-gap: 1em;
     grid-row-gap: 1em;
     border: 1px solid black;
-    background-color: coral;
+    background-color: #D8C3A5;
+    border-radius: 5px;
 }
 
 .formClass {
     border: 1px solid purple;
+}
+
+body {
+    background-color: #EAE7DC;
+}
+
+.nav-tabs{
+    background-color: #D8C3A5;
+    border-radius: 10px;
+}
+.nav-tabs > li > a:hover {
+    background-color: #8E8D8A;
+    border-radius: 10px;
+}
+a:link {
+    color: #E85A4F;
+}
+
+a:visited {
+    color: #E85A4F;
+}
+
+a:hover {
+    color: #E98074;
+}
+
+a:active {
+    color: #E85A4F;
 }
