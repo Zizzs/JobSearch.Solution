@@ -18,13 +18,21 @@ namespace JobSearch.Models
             ChromeDriver driver = new ChromeDriver("/Users/Guest/Desktop/JobSearch.Solution/JobSearch/wwwroot/drivers");
             
             // Go to the home page
-            driver.Navigate().GoToUrl("http://www.google.com");
+            driver.Navigate().GoToUrl("http://www.indeed.com");
 
             // Get the page elements
             var searchForm = driver.FindElementByName("q");
+            var locationForm = driver.FindElementByName("l");
+            
 
             // Type user name and password
-            searchForm.SendKeys("How do I do selenium stuff?");
+            searchForm.SendKeys("Web Developer");
+            locationForm.SendKeys("");
+            for(int i =0; i <20; i++)
+            {
+               locationForm.SendKeys(Keys.Backspace);
+            }
+            locationForm.SendKeys("Portland, OR");
 
             // and click the login button
             searchForm.Submit();
