@@ -8,6 +8,13 @@
     margin-right: 25px;
 }
 
+.wrapperAll {
+    display: inline-grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-column-gap: 1em;
+}
+
+
 body {
     background-image: url(/img/background.png);
     background-repeat: repeat;
@@ -48,7 +55,7 @@ a:active {
     color: #31708E;
 }
 
-#indeedLogo {
+.logo {
     width: 20%;
     display: block;
     margin-left: auto;
