@@ -21,7 +21,8 @@ namespace JobSearch.Controllers
         [HttpGet("/jobs/stackoverflow")]
         public ActionResult StackOverflow()
         {
-            return View();
+            List<IndeedClass> model = new List<IndeedClass>();
+            return View(model);
         }
 
         [HttpGet("/jobs/indeed")]
