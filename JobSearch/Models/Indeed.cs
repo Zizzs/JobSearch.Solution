@@ -9,12 +9,12 @@ using OpenQA.Selenium.Chrome;
 
 namespace JobSearch.Models
 {
-    public class Indeed
+    class IndeedClass
     {
         private string _title;
         private string _url;
 
-        Indeed(string title, string url)
+        IndeedClass(string title, string url)
         {
             _title = title;
             _url = url;
@@ -30,7 +30,7 @@ namespace JobSearch.Models
             return _url;
         }
         // Initialize the Chrome Driver
-        public static List<Indeed> RunSearch()
+        public static List<IndeedClass> RunSearch()
         {
 
             ChromeDriver driver = new ChromeDriver("/Users/Guest/Desktop/JobSearch.Solution/JobSearch/wwwroot/drivers");
@@ -59,7 +59,7 @@ namespace JobSearch.Models
             driver.Navigate().GoToUrl("https://www.indeed.com/jobs?q=Web+Developer&l=Portland%2C+OR");
             
             
-            List<Indeed> indeedJobs = new List<Indeed>{};
+            List<IndeedClass> indeedJobs = new List<IndeedClass>{};
             string tempTitle ="";
             string tempLink = "";
             
@@ -68,7 +68,7 @@ namespace JobSearch.Models
             var tempListing = driver.FindElementById("sja" +i); 
               tempTitle = tempListing.Text;
               tempLink = tempListing.GetAttribute("href");
-            Indeed tempJob = new Indeed(tempTitle, tempLink);
+            IndeedClass tempJob = new IndeedClass(tempTitle, tempLink);
             indeedJobs.Add(tempJob);
            }
 
