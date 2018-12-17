@@ -16,22 +16,35 @@ namespace JobSearch.Models
         {
 
             ChromeDriver driver = new ChromeDriver("/Users/Guest/Desktop/JobSearch.Solution/JobSearch/wwwroot/drivers");
-            
+
             // Go to the home page
-            driver.Navigate().GoToUrl("http://www.google.com");
+            driver.Navigate().GoToUrl("https://stackoverflow.com/jobs");
 
             // Get the page elements
-            var searchForm = driver.FindElementByName("q");
+            var searchForm = driver.FindElementById("q");
+            // Get the location
+            var searchFormLocation = driver.FindElementById("l");
 
             // Type user name and password
-            searchForm.SendKeys("How do I do selenium stuff?");
+            searchForm.SendKeys("Junior Web Developer");
+            searchFormLocation.SendKeys("Seattle WA, USA");
 
             // and click the login button
             searchForm.Submit();
 
-            // // Extract the text and save it into result.txt
-            // var result = driver.FindElementByXPath("//div[@id='case_login']/h3").Text;
-            // File.WriteAllText("result.txt", result);
+            // Extract the text and save it into result.txt
+            var result = driver.FindElementByCssSelector("h2");
+            var resultText = result.Text;
+            File.WriteAllText("result.txt", resultText);
+
+            // ("//*[@id='mainbar']/div[2]/div/div[3]/div[3]/div[1]/h2/a").Text;
+            // foreach (var result in results)
+            // {
+
+            //     string resultText = result.Text;
+            //     File.WriteAllText("result.txt", resultText);
+            // }
+
         }
     }
 }
