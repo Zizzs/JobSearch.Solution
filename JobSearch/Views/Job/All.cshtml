@@ -7,19 +7,24 @@
     <li><a class="nav-link" href = "/jobs/all">All</a></li>
     <li><a class="nav-link" href = "/jobs/stackoverflow">Stack OverFlow</a></li>
     <li><a class="nav-link" href = "/jobs/indeed">Indeed</a></li>
+    <li><a class="nav-link" href = "/jobs/glassdoor">GlassDoor</a></li>
+    <li><a class="nav-link" href = "/jobs/craigslist">Craigslist</a></li>
+    <li><a class="nav-link" href = "/jobs/monster">Monster</a></li>
   </ul>
 </div>
 <br>
 <div class="wrapperAll">
-  <div id="indeedLogo"><img class="logo" src="~/img/indeed.png"></div>
-  <div id="stackoverflowLogo"><img class="logo" src="~/img/stackoverflow.png"></div>
+  <div id="indeedLogo"><img class="logoAll" src="~/img/indeed.png"></div>
+  <div id="stackoverflowLogo"><img class="logoAll" src="~/img/stackoverflow.png"></div>
+  <div id="glassdoorLogo"><img class="logoAll" src="~/img/glassdoor.png"></div>
+  <div id="craigslistLogo"><img class="logoAll" src="~/img/craigslist.png"></div>
 </div>
 <br>
 <br>
 <div class="wrapper">
   <div id="formLeft" class="formClass">
-    <p>Search Indeed By Job TItle and Job Location</p>
-    <form action = "/jobs/indeed" method="post">
+    <p>Search All Sites By Job TItle and Job Location</p>
+    <form action = "/jobs/all" method="post">
             <label for='jobName'>Job Title</label>
             <input id='jobName' name='jobName' type='text' required><br>
             <label for='jobLocation'>Job Location</label>
@@ -30,9 +35,42 @@
   <div class="formClass">
     <p>Output</p>
     <ul>
-    @foreach(IndeedClass job in @Model)
+    <h3>Monster Jobs:</h3>
+    @if (@Model["monster"].Count != 0)
     {
-      <a href="@job.GetUrl()"><h2>@job.GetTitle()</h2></a>
+      @foreach(MonsterClass job in @Model["monster"])
+        {
+          <a class="exportLink" href="@job.GetUrl()"><p class="exportLink">@job.GetTitle()</p ></a>
+        }
+    } else
+    {
+      <p> </p>
+    }
+    </ul>
+    <ul>
+    <h3>Craigslist Jobs</h3>
+    @if (@Model["craigslist"].Count != 0)
+    {
+      @foreach(CraigslistClass job in @Model["craigslist"])
+        {
+          <a class="exportLink" href="@job.GetUrl()"><p class="exportLink">@job.GetTitle()</p ></a>
+        }
+    }else
+    {
+      <p> </p>
+    }
+    </ul>
+    <ul>
+    <h3>Glassdoor Jobs</h3>
+    @if (@Model["glassdoor"].Count != 0)
+    {
+      @foreach(GlassdoorClass job in @Model["glassdoor"])
+        {
+          <a href="@job.GetUrl()"><p class="exportLink">@job.GetTitle()</p ></a>
+        }
+    }else
+    {
+      <p> </p>
     }
     </ul>
   </div>

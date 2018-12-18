@@ -67,18 +67,18 @@ namespace JobSearch.Models
                 tempLink = tempListing.GetAttribute("href");
                 IndeedClass tempJob = new IndeedClass(tempTitle, tempLink);
                 indeedJobs.Add(tempJob);
-            }
+           }
 
             var nextLink = driver.FindElementByXPath("//*[@id='resultsCol']/div[28]/a[1]/span");
-            nextLink.Click();
+                        nextLink.Click();
 
-            while (indeedJobs.Count < 10)
-            {
-                try
-                {
-                    for (int j = 7; j < 8; j++)
-                    {
-                        var tempListing2 = driver.FindElementById("sja" + j);
+           while(indeedJobs.Count <10)
+           {
+               try
+               {
+                    for(int j= 7; j<8; j++)   
+                   {
+                        var tempListing2 = driver.FindElementById("sja" +j); 
                         tempTitle = tempListing2.Text;
                         tempLink = tempListing2.GetAttribute("href");
                         IndeedClass tempJob = new IndeedClass(tempTitle, tempLink);
@@ -100,9 +100,7 @@ namespace JobSearch.Models
 
                 }
             }
-
-
-
+            
             return indeedJobs;
         }
     }
