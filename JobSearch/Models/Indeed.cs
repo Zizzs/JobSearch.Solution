@@ -4,8 +4,10 @@ using MySql.Data.MySqlClient;
 using JobSearch;
 using System.IO;
 using System.Text;
+using System.Threading;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using System.Linq;
 
 
 namespace JobSearch.Models
@@ -14,11 +16,16 @@ namespace JobSearch.Models
     {
         private string _title;
         private string _url;
+        private string _company;
+        private string _location;
 
-        IndeedClass(string title, string url)
+
+        IndeedClass(string title, string url, string company, string location)
         {
             _title = title;
             _url = url;
+            _company = company;
+            _location = location;
         }
 
         public string GetTitle()
@@ -30,6 +37,15 @@ namespace JobSearch.Models
         {
             return _url;
         }
+        public string GetCompany()
+        {
+            return _company;
+        }
+        public string GetLocation()
+        {
+            return _location;
+        }
+
         // Initialize the Chrome Driver
         public static List<IndeedClass> RunSearch(string jobName, string jobLocation)
         {
@@ -44,7 +60,7 @@ namespace JobSearch.Models
             var locationForm = driver.FindElementByName("l");
 
 
-            // Type user name and password
+            // Type job title and location
             searchForm.SendKeys(jobName);
             locationForm.SendKeys("");
             for (int i = 0; i < 20; i++)
@@ -53,57 +69,79 @@ namespace JobSearch.Models
             }
             locationForm.SendKeys(jobLocation);
 
-            // and click the login button
+            // and click the submit button
             searchForm.Submit();
 
             List<IndeedClass> indeedJobs = new List<IndeedClass> { };
             string tempTitle = "";
             string tempLink = "";
+            string tempCompany = "";
+            string tempLocation = "";
 
-            for (int i = 1; i < 8; i++)
+
+            IList<IWebElement> links = driver.FindElements(By.ClassName("turnstileLink"));
+
+
+
+            for (int i = 0; i < links.Count; i++)
             {
-                var tempListing = driver.FindElementById("sja" + i);
-                tempTitle = tempListing.Text;
-                tempLink = tempListing.GetAttribute("href");
-                IndeedClass tempJob = new IndeedClass(tempTitle, tempLink);
+                links = driver.FindElements(By.ClassName("turnstileLink"));
+
+
+                if (!string.IsNullOrEmpty(links[i].Text))
+                {
+                    if (links[i].GetAttribute("data-tn-element") == "jobTitle")
+                    {
+                        tempTitle = links[i].Text;
+                        tempLink = links[i].GetAttribute("href");
+                        links[i].Click();
+                        int timeout = 0;
+                        while (driver.FindElements(By.Id("vjs-cn")).Count == 0 && timeout < 500)
+                        {
+                            Thread.Sleep(200);
+                            timeout++;
+                        }
+                        IWebElement company = driver.FindElement(By.Id("vjs-cn"));
+
+                        while (driver.FindElements(By.Id("vjs-loc")).Count == 0 && timeout < 500)
+                        {
+                            Thread.Sleep(200);
+                            timeout++;
+                        }
+                        IWebElement location = driver.FindElement(By.Id("vjs-loc"));
+
+                        tempCompany = company.Text;
+                        tempLocation = location.Text;
+                    }
+                }
+                // Create an instance ob the object and push to the list
+                IndeedClass tempJob = new IndeedClass(tempTitle, tempLink, tempCompany, tempLocation);
                 indeedJobs.Add(tempJob);
+
             }
 
-            var nextLink = driver.FindElementByXPath("//*[@id='resultsCol']/div[28]/a[1]/span");
-            nextLink.Click();
+            // Filter out duplicates
+            List<IndeedClass> result = new List<IndeedClass> { };
 
-            while (indeedJobs.Count < 10)
+            for (int i = 0; i < indeedJobs.Count; i++)
             {
-                try
+                bool exists = false;
+
+                foreach (IndeedClass job in result)
                 {
-                    for (int j = 7; j < 8; j++)
+                    if (indeedJobs[i].GetUrl() == job.GetUrl())
                     {
-                        var tempListing2 = driver.FindElementById("sja" + j);
-                        tempTitle = tempListing2.Text;
-                        tempLink = tempListing2.GetAttribute("href");
-                        IndeedClass tempJob = new IndeedClass(tempTitle, tempLink);
-                        indeedJobs.Add(tempJob);
+                        exists = true;
                     }
                 }
-                catch
+
+                if (!exists)
                 {
-                    for (int j = 7; j < 8; j++)
-                    {
-                        var thirdLink = driver.FindElementByXPath("//*[@id='resultsCol']/div[28]/a[3]");
-                        var tempListing3 = driver.FindElementById("sja" + j);
-                        tempTitle = tempListing3.Text;
-                        tempLink = tempListing3.GetAttribute("href");
-                        IndeedClass tempJob = new IndeedClass(tempTitle, tempLink);
-                        indeedJobs.Add(tempJob);
-                    }
-
-
+                    result.Add(indeedJobs[i]);
                 }
             }
-
-
-
-            return indeedJobs;
+            return result;
         }
     }
+
 }
