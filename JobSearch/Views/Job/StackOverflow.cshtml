@@ -24,17 +24,15 @@
     </form>
   </div>
   <div class="formClass">
-    <p>Output</p>
+    <p>Output:</p>
      <ul>
      @if(@Model.Count != 0)
     {
       @foreach(StackOverflow job in @Model)
         {
-          <a href="@job.GetUrl()"><h2>@job.GetTitle()</h2></a>
+          <a href="@job.GetUrl()"><h2> @job.GetTitle()</h2></a>
+          <h2>Company:@job.GetCompany()</h2>
         }
-    } else
-    {
-      <p> No results found for your search</p>
     }
     </ul>
   </div>
