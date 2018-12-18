@@ -16,15 +16,12 @@ namespace JobSearch.Models
         private string _title;
         private string _url;
         private string _company;
-
-
-        StackOverflow(string title, string url, string company)
+        public StackOverflow(string title, string url, string company)
         {
             _title = title;
             _url = url;
             _company = company;
         }
-
         public string GetTitle()
         {
             return _title;
@@ -52,20 +49,14 @@ namespace JobSearch.Models
             // driver.Url("https://stackoverflow.com/jobs");
             driver.Navigate().GoToUrl("https://stackoverflow.com/jobs");
 
-            Thread.Sleep(2000);
             // Get the page elements
             var searchForm = driver.FindElementById("q");
-            var locationForm = driver.FindElementById("l");
-
+            // Get the location
+            var searchFormLocation = driver.FindElementById("l");
 
             // Type user name and password
             searchForm.SendKeys(jobName);
-            locationForm.SendKeys("");
-            for (int i = 0; i < 20; i++)
-            {
-                locationForm.SendKeys(Keys.Backspace);
-            }
-            locationForm.SendKeys(jobLocation);
+            searchFormLocation.SendKeys(jobLocation);
 
             // and click the login button
             searchForm.Submit();
@@ -92,12 +83,11 @@ namespace JobSearch.Models
                 {
                     if (existsElement(i))
                     {
-                        Console.WriteLine("first try started");
                         var tempListing = driver.FindElementByXPath("//*[@id='mainbar']/div[2]/div/div[" + i + "]/div[3]/div[1]/h2/a");
+                        var tempList = driver.FindElementByXPath("//*[@id='mainbar']/div[2]/div/div[" + i + "]/div[3]/div[2]/span[1]");
                         tempTitle = tempListing.Text;
                         tempLink = tempListing.GetAttribute("href");
-                        tempCompany = (tempListing.FindElement(By.CssSelector("div.-company > span"))).Text;
-                        Console.WriteLine(tempCompany);
+                        tempCompany = tempList.Text;
                         StackOverflow tempJob = new StackOverflow(tempTitle, tempLink, tempCompany);
                         stackOverflowJobs.Add(tempJob);
                     }
