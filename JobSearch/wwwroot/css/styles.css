@@ -10,7 +10,7 @@
 
 .wrapperAll {
     display: inline-grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     grid-column-gap: 1em;
 }
 
@@ -60,4 +60,12 @@ a:active {
     display: block;
     margin-left: auto;
     margin-right: auto;
+}
+
+.logoAll {
+    width: 50%;
+}
+
+.exportLink {
+    font-size: 12px;
 }

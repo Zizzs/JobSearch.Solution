@@ -15,8 +15,27 @@ namespace JobSearch.Controllers
         [HttpGet("/jobs/all")]
         public ActionResult All()
         {
-            List<IndeedClass> model = new List<IndeedClass>();
+            Dictionary<string, object> model = new Dictionary<string, object>();
+            List<GlassdoorClass> glassdoor = new List<GlassdoorClass>();
+            List<CraigslistClass> craigslist = new List<CraigslistClass>();
+            List<MonsterClass> monster = new List<MonsterClass>();
+            model.Add("glassdoor" , glassdoor);
+            model.Add("craigslist" , craigslist);
+            model.Add("monster" , monster);
             return View(model);
+        }
+
+        [HttpPost("/jobs/all")]
+        public ActionResult AllSearch(string jobName, string jobLocation)
+        {
+            Dictionary<string, object> model = new Dictionary<string, object>();
+            List<GlassdoorClass> glassdoor = GlassdoorClass.RunSearch(jobName, jobLocation);
+            List<CraigslistClass> craigslist = CraigslistClass.RunSearch(jobName);
+            List<MonsterClass> monster = MonsterClass.RunSearch(jobName, jobLocation);
+            model.Add("glassdoor" , glassdoor);
+            model.Add("craigslist" , craigslist);
+            model.Add("monster" , monster);
+            return View("All" , model);
         }
 
         [HttpGet("/jobs/stackoverflow")]
@@ -32,6 +51,7 @@ namespace JobSearch.Controllers
             List<StackOverflow> model = StackOverflow.RunSearch(jobName, jobLocation);
             return View("StackOverflow", model);
         }
+
         [HttpGet("/jobs/indeed")]
         public ActionResult Indeed()
         {
@@ -44,6 +64,49 @@ namespace JobSearch.Controllers
         {
             List<IndeedClass> model = IndeedClass.RunSearch(jobName, jobLocation);
             return View("Indeed", model);
+        }
+
+        [HttpGet("/jobs/glassdoor")]
+        public ActionResult Glassdoor()
+        {
+            List<IndeedClass> model = new List<IndeedClass>();
+            return View(model);
+        }
+
+        [HttpPost("/jobs/glassdoor")]
+        public ActionResult GlassdoorSearch(string jobName, string jobLocation)
+        {
+            List<GlassdoorClass> model = GlassdoorClass.RunSearch(jobName, jobLocation);
+            return View("Glassdoor", model);
+            
+        }
+
+        [HttpGet("/jobs/craigslist")]
+        public ActionResult Craigslist()
+        {
+            List<CraigslistClass> model = new List<CraigslistClass>();
+            return View(model);
+        }
+
+        [HttpPost("/jobs/craigslist")]
+        public ActionResult CraigslistSearch(string jobName)
+        {
+            List<CraigslistClass> model = CraigslistClass.RunSearch(jobName);
+            return View("Craigslist", model);
+        }
+
+        [HttpGet("/jobs/monster")]
+        public ActionResult Monster()
+        {
+            List<MonsterClass> model = new List<MonsterClass>();
+            return View(model);
+        }
+
+        [HttpPost("/jobs/monster")]
+        public ActionResult MonsterSearch(string jobName, string jobLocation)
+        {
+            List<MonsterClass> model = MonsterClass.RunSearch(jobName, jobLocation);
+            return View("Monster", model);
         }
 
     }
