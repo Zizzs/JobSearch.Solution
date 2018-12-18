@@ -15,11 +15,14 @@ namespace JobSearch.Models
     {
         private string _title;
         private string _url;
+        private string _company;
 
-        StackOverflow(string title, string url)
+
+        StackOverflow(string title, string url, string company)
         {
             _title = title;
             _url = url;
+            _company = company;
         }
 
         public string GetTitle()
@@ -30,6 +33,10 @@ namespace JobSearch.Models
         public string GetUrl()
         {
             return _url;
+        }
+        public string GetCompany()
+        {
+            return _company;
         }
         // Initialize the Chrome Driver
         public static List<StackOverflow> RunSearch(string jobName, string jobLocation)
@@ -66,6 +73,7 @@ namespace JobSearch.Models
             List<StackOverflow> stackOverflowJobs = new List<StackOverflow> { };
             string tempTitle = "";
             string tempLink = "";
+            string tempCompany = "";
             bool existsElement(int i)
             {
                 try
@@ -86,12 +94,12 @@ namespace JobSearch.Models
                     {
                         Console.WriteLine("first try started");
                         var tempListing = driver.FindElementByXPath("//*[@id='mainbar']/div[2]/div/div[" + i + "]/div[3]/div[1]/h2/a");
-                        // var tempListing = driver.FindElementByPartialLinkText("developer");
                         tempTitle = tempListing.Text;
                         tempLink = tempListing.GetAttribute("href");
-                        StackOverflow tempJob = new StackOverflow(tempTitle, tempLink);
+                        tempCompany = (tempListing.FindElement(By.CssSelector("div.-company > span"))).Text;
+                        Console.WriteLine(tempCompany);
+                        StackOverflow tempJob = new StackOverflow(tempTitle, tempLink, tempCompany);
                         stackOverflowJobs.Add(tempJob);
-                        Console.WriteLine("finished first try");
                     }
                 }
             }
@@ -99,20 +107,18 @@ namespace JobSearch.Models
             {
                 for (int i = 1; i < 20; i++)
                 {
-                    Console.WriteLine("catch triggered");
                     if (existsElement(i))
                     {
                         var tempListing = driver.FindElementByXPath("//*[@id='mainbar']/div[2]/div/div[" + i + "]/div[3]/div[1]/h2/a");
-                        // var tempListing = driver.FindElementByPartialLinkText("developer");
+                        var tempList = driver.FindElementByXPath("//*[@id='mainbar']/div[2]/div/div[" + i + "]/div[3]/div[2]/span[1]");
                         tempTitle = tempListing.Text;
                         tempLink = tempListing.GetAttribute("href");
-                        StackOverflow tempJob = new StackOverflow(tempTitle, tempLink);
+                        tempCompany = tempList.Text;
+                        StackOverflow tempJob = new StackOverflow(tempTitle, tempLink, tempCompany);
                         stackOverflowJobs.Add(tempJob);
-                        Console.WriteLine("finished second try");
                     }
                 }
             }
-
             return stackOverflowJobs;
         }
     }
