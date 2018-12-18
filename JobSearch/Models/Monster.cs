@@ -45,7 +45,7 @@ namespace JobSearch.Models
             var searchForm = driver.FindElementById("q2");
             var locationForm = driver.FindElementById("where2");
 
-
+            Thread.Sleep(250);
             // Type user name and password
             searchForm.SendKeys(jobName);
             locationForm.SendKeys("");
@@ -53,18 +53,26 @@ namespace JobSearch.Models
             {
                 locationForm.SendKeys(Keys.Backspace);
             }
+            Thread.Sleep(250);
             locationForm.SendKeys(jobLocation);
 
+            Thread.Sleep(250);
             // and click the login button
             searchForm.Submit();
 
             List<MonsterClass> monsterJobs = new List<MonsterClass> { };
             string tempTitle = "";
             string tempLink = "";
-
-            IReadOnlyCollection<IWebElement> anchors = driver.FindElements(By.ClassName("card-content "));
-            int count = anchors.Count;
-            for(int i = 1; i < 25; i++)
+            Thread.Sleep(750);
+            // IReadOnlyCollection<IWebElement> anchors = driver.FindElements(By.ClassName("card-content "));
+            IWebElement number = driver.FindElement(By.XPath("//*[@id='ResultsScrollable']/div"));
+            int count = int.Parse(number.GetAttribute("data-results-total"));
+            if (count > 25)
+            {
+                count = 25;
+            }
+            Console.WriteLine(count);
+            for(int i = 1; i < count; i++)
             {
                 if (i==3)
                 {
