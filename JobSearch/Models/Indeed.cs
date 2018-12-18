@@ -4,8 +4,10 @@ using MySql.Data.MySqlClient;
 using JobSearch;
 using System.IO;
 using System.Text;
+using System.Threading;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using System.Linq;
 
 
 namespace JobSearch.Models
@@ -15,13 +17,15 @@ namespace JobSearch.Models
         private string _title;
         private string _url;
         private string _company;
+        private string _location;
 
 
-        IndeedClass(string title, string url, string company)
+        IndeedClass(string title, string url, string company, string location)
         {
             _title = title;
             _url = url;
             _company = company;
+            _location = location;
         }
 
         public string GetTitle()
@@ -36,6 +40,10 @@ namespace JobSearch.Models
         public string GetCompany()
         {
             return _company;
+        }
+        public string GetLocation()
+        {
+            return _location;
         }
 
         // Initialize the Chrome Driver
@@ -68,16 +76,16 @@ namespace JobSearch.Models
             string tempTitle = "";
             string tempLink = "";
             string tempCompany = "";
+            string tempLocation = "";
 
 
             IList<IWebElement> links = driver.FindElements(By.ClassName("turnstileLink"));
-            IList<IWebElement> companies = driver.FindElements(By.ClassName("turnstileLink"));
+
 
 
             for (int i = 0; i < links.Count; i++)
             {
                 links = driver.FindElements(By.ClassName("turnstileLink"));
-                companies = driver.FindElements(By.ClassName("turnstileLink"));
 
 
                 if (!string.IsNullOrEmpty(links[i].Text))
@@ -90,30 +98,49 @@ namespace JobSearch.Models
                         int timeout = 0;
                         while (driver.FindElements(By.Id("vjs-cn")).Count == 0 && timeout < 500)
                         {
+                            Thread.Sleep(200);
                             timeout++;
                         }
                         IWebElement company = driver.FindElement(By.Id("vjs-cn"));
+                        while (driver.FindElements(By.Id("vjs-loc")).Count == 0 && timeout < 500)
+                        {
+                            Thread.Sleep(200);
+                            timeout++;
+                        }
+                        IWebElement location = driver.FindElement(By.Id("vjs-loc"));
 
                         tempCompany = company.Text;
+                        tempLocation = location.Text;
                     }
                 }
 
-                // if (!string.IsNullOrEmpty(companies[i].Text))
-                // {
-                //     if (companies[i].GetAttribute("tag") == "span" && companies[i].GetAttribute("class") == "company")
-                //     {
-                //         tempCompany = companies[i].Text;
-                //     }
-                // }
-
-
-                IndeedClass tempJob = new IndeedClass(tempTitle, tempLink, tempCompany);
+                IndeedClass tempJob = new IndeedClass(tempTitle, tempLink, tempCompany, tempLocation);
                 indeedJobs.Add(tempJob);
 
-
-
             }
-            return indeedJobs;
+
+            // Filter out duplicates
+            List<IndeedClass> result = new List<IndeedClass> { };
+
+            for (int i = 0; i < indeedJobs.Count; i++)
+            {
+                bool exists = false;
+
+                foreach (IndeedClass job in result)
+                {
+                    if (indeedJobs[i].GetUrl() == job.GetUrl())
+                    {
+                        exists = true;
+                    }
+                }
+
+                if (!exists)
+                {
+                    result.Add(indeedJobs[i]);
+                }
+            }
+            return result;
         }
     }
+
 }
