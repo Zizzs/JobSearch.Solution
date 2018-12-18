@@ -6,6 +6,8 @@ using System.IO;
 using System.Text;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using System.Threading;
+
 
 namespace JobSearch.Models
 {
@@ -13,11 +15,13 @@ namespace JobSearch.Models
     {
         private string _title;
         private string _url;
-        public StackOverflow(string title, string url)
+
+        StackOverflow(string title, string url)
         {
             _title = title;
             _url = url;
         }
+
         public string GetTitle()
         {
             return _title;
@@ -36,14 +40,20 @@ namespace JobSearch.Models
             // Go to the home page
             driver.Navigate().GoToUrl("https://stackoverflow.com/jobs");
 
+            Thread.Sleep(2000);
             // Get the page elements
             var searchForm = driver.FindElementById("q");
-            // Get the location
-            var searchFormLocation = driver.FindElementById("l");
+            var locationForm = driver.FindElementById("l");
+
 
             // Type user name and password
             searchForm.SendKeys(jobName);
-            searchFormLocation.SendKeys(jobLocation);
+            locationForm.SendKeys("");
+            for (int i = 0; i < 20; i++)
+            {
+                locationForm.SendKeys(Keys.Backspace);
+            }
+            locationForm.SendKeys(jobLocation);
 
             // and click the login button
             searchForm.Submit();
@@ -51,39 +61,39 @@ namespace JobSearch.Models
             List<StackOverflow> stackOverflowJobs = new List<StackOverflow> { };
             string tempTitle = "";
             string tempLink = "";
-
-            try
+            Thread.Sleep(1000);
+            IReadOnlyCollection<IWebElement> anchors = driver.FindElements(By.ClassName("-job-summary"));
+            int count = anchors.Count;
+            for(int i = 1; i < count; i++)
             {
-                for (int i = 3; i < 9; i++)
+                if (i==3)
                 {
-                    var tempListing = driver.FindElementByXPath("//*[@id='mainbar']/div[2]/div/div[" + i + "]/div[3]/div[1]/h2/a");
-                    tempTitle = tempListing.Text;
-                    tempLink = tempListing.GetAttribute("href");
-                    StackOverflow tempJob = new StackOverflow(tempTitle, tempLink);
-                    stackOverflowJobs.Add(tempJob);
+                    i=4;
                 }
-            }
-            catch
-            {
-                for (int i = 3; i < 9; i++)
+                else
                 {
-                    var tempListing = driver.FindElementByXPath("//*[@id='mainbar']/div[2]/div/div[" + i + "]/div[3]/div[1]/h2/a");
-                    tempTitle = tempListing.Text;
-                    tempLink = tempListing.GetAttribute("href");
-                    StackOverflow tempJob = new StackOverflow(tempTitle, tempLink);
-                    stackOverflowJobs.Add(tempJob);
+                    if (driver.FindElement(By.TagName("div")).Text.Contains("This isn't exactly what you searched for, but you might be interested in these jobs:") == true)
+                    {
+                        tempTitle = "There are no more of those jobs on Stack Overflow.";
+                        tempLink = "http://www.google.com";
+                        StackOverflow tempjob = new StackOverflow(tempTitle, tempLink);
+                        stackOverflowJobs.Add(tempjob);
+                        i = 1000;
+                    }
+                    else
+                    {
+                        IWebElement single = driver.FindElement(By.XPath("//*/div["+i+"]/div[3]/div[1]/h2/a"));
+
+                        tempTitle = single.Text;
+                        tempLink = single.GetAttribute("href");
+                        StackOverflow tempjob = new StackOverflow(tempTitle, tempLink);
+                        stackOverflowJobs.Add(tempjob);
+                    }
                 }
             }
             return stackOverflowJobs;
-            // Extract the text and save it into result.txt
-            // File.WriteAllText("result.txt", resultText);
-            //*[@id="mainbar"]/div[2]/div/div[8]/div[3]/div[1]/h2/a
-            //*[@id="mainbar"]/div[2]/div/div[7]/div[3]/div[1]/h2/a
-            //*[@id="mainbar"]/div[2]/div/div[6]/div[3]/div[1]/h2/a
-            //*[@id="mainbar"]/div[2]/div/div[3]/div[3]/div[1]/h2/a
-
-            //*[@id="mainbar"]/div[2]/div/div[1]/div[3]/div[1]/h2/a
-            //*[@id="mainbar"]/div[2]/div/div[3]/div[3]/div[1]/h2/a
         }
     }
 }
+
+//*[@id="mainbar"]/div[2]/div/div[2]/text()

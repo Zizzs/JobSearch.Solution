@@ -6,16 +6,17 @@ using System.IO;
 using System.Text;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using System.Threading;
 
 
 namespace JobSearch.Models
 {
-    public class GlassdoorClass
+    public class MonsterClass
     {
         private string _title;
         private string _url;
 
-        GlassdoorClass(string title, string url)
+        MonsterClass(string title, string url)
         {
             _title = title;
             _url = url;
@@ -31,18 +32,18 @@ namespace JobSearch.Models
             return _url;
         }
         // Initialize the Chrome Driver
-        public static List<GlassdoorClass> RunSearch(string jobName, string jobLocation)
+        public static List<MonsterClass> RunSearch(string jobName, string jobLocation)
         {
 
             ChromeDriver driver = new ChromeDriver("/Users/Guest/Desktop/JobSearch.Solution/JobSearch/wwwroot/drivers");
 
-            
             // Go to the home page
-            driver.Navigate().GoToUrl("https://www.glassdoor.com/index.htm");
-            driver.Manage().Cookies.DeleteAllCookies();
+            driver.Navigate().GoToUrl("https://www.monster.com/");
+
+            Thread.Sleep(2000);
             // Get the page elements
-            var searchForm = driver.FindElementById("KeywordSearch");
-            var locationForm = driver.FindElementById("LocationSearch");
+            var searchForm = driver.FindElementById("q2");
+            var locationForm = driver.FindElementById("where2");
 
 
             // Type user name and password
@@ -57,21 +58,29 @@ namespace JobSearch.Models
             // and click the login button
             searchForm.Submit();
 
-            List<GlassdoorClass> glassdoorJobs = new List<GlassdoorClass> { };
+            List<MonsterClass> monsterJobs = new List<MonsterClass> { };
             string tempTitle = "";
             string tempLink = "";
 
-
-            IReadOnlyCollection<IWebElement> anchors = driver.FindElements(By.ClassName("jobLink"));
-            foreach (IWebElement link in anchors)
+            IReadOnlyCollection<IWebElement> anchors = driver.FindElements(By.ClassName("card-content "));
+            int count = anchors.Count;
+            for(int i = 1; i < 25; i++)
             {
-                tempTitle = link.Text;
-                tempLink = link.GetAttribute("href");
-                GlassdoorClass tempjob = new GlassdoorClass(tempTitle, tempLink);
-                glassdoorJobs.Add(tempjob);
-            }
+                if (i==3)
+                {
+                    i=4;
+                }
+                else
+                {
+                    IWebElement single = driver.FindElement(By.XPath("//*/section["+i+"]/div/div[2]/header/h2/a"));
 
-            return glassdoorJobs;
+                    tempTitle = single.Text;
+                    tempLink = single.GetAttribute("href");
+                    MonsterClass tempjob = new MonsterClass(tempTitle, tempLink);
+                    monsterJobs.Add(tempjob);
+                }
+            }
+            return monsterJobs;
         }
     }
 }
