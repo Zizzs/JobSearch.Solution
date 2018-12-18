@@ -8,6 +8,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 
 
+
 namespace JobSearch.Models
 {
     public class IndeedClass
@@ -60,49 +61,25 @@ namespace JobSearch.Models
             string tempTitle = "";
             string tempLink = "";
 
-            for (int i = 1; i < 8; i++)
+
+
+            IList<IWebElement> links = driver.FindElements(By.ClassName("turnstileLink"));
+            IList<IWebElement> listOflinks = new List<IWebElement>();
+
+            for(int i = 0 ; i < links.Count ; i++)
             {
-                var tempListing = driver.FindElementById("sja" + i);
-                tempTitle = tempListing.Text;
-                tempLink = tempListing.GetAttribute("href");
+            links = driver.FindElements(By.ClassName("turnstileLink"));
+
+            if (!string.IsNullOrEmpty(links[i].Text) && links[i].GetAttribute("data-tn-element") == "jobTitle")
+            {
+                tempTitle = links[i].Text;
+                tempLink = links[i].GetAttribute("href");
                 IndeedClass tempJob = new IndeedClass(tempTitle, tempLink);
                 indeedJobs.Add(tempJob);
             }
+          
 
-            var nextLink = driver.FindElementByXPath("//*[@id='resultsCol']/div[28]/a[1]/span");
-            nextLink.Click();
-
-            while (indeedJobs.Count < 10)
-            {
-                try
-                {
-                    for (int j = 7; j < 8; j++)
-                    {
-                        var tempListing2 = driver.FindElementById("sja" + j);
-                        tempTitle = tempListing2.Text;
-                        tempLink = tempListing2.GetAttribute("href");
-                        IndeedClass tempJob = new IndeedClass(tempTitle, tempLink);
-                        indeedJobs.Add(tempJob);
-                    }
-                }
-                catch
-                {
-                    for (int j = 7; j < 8; j++)
-                    {
-                        var thirdLink = driver.FindElementByXPath("//*[@id='resultsCol']/div[28]/a[3]");
-                        var tempListing3 = driver.FindElementById("sja" + j);
-                        tempTitle = tempListing3.Text;
-                        tempLink = tempListing3.GetAttribute("href");
-                        IndeedClass tempJob = new IndeedClass(tempTitle, tempLink);
-                        indeedJobs.Add(tempJob);
-                    }
-
-
-                }
-            }
-
-
-
+          }
             return indeedJobs;
         }
     }
