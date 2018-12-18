@@ -11,6 +11,6 @@ namespace JobSearch.Models
 {
     public class JobSearchClass
     {
-       
+
     }
 }

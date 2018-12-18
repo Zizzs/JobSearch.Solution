@@ -35,34 +35,34 @@ namespace JobSearch.Models
         {
 
             ChromeDriver driver = new ChromeDriver("/Users/Guest/Desktop/JobSearch.Solution/JobSearch/wwwroot/drivers");
-            
+
             // Go to the home page
             driver.Navigate().GoToUrl("http://www.indeed.com");
 
             // Get the page elements
             var searchForm = driver.FindElementByName("q");
             var locationForm = driver.FindElementByName("l");
-            
+
 
             // Type user name and password
             searchForm.SendKeys(jobName);
             locationForm.SendKeys("");
-            for(int i =0; i <20; i++)
+            for (int i = 0; i < 20; i++)
             {
-               locationForm.SendKeys(Keys.Backspace);
+                locationForm.SendKeys(Keys.Backspace);
             }
             locationForm.SendKeys(jobLocation);
 
             // and click the login button
             searchForm.Submit();
-            
-            List<IndeedClass> indeedJobs = new List<IndeedClass>{};
-            string tempTitle ="";
+
+            List<IndeedClass> indeedJobs = new List<IndeedClass> { };
+            string tempTitle = "";
             string tempLink = "";
-            
-            for(int i =1; i < 8; i++)
+
+            for (int i = 1; i < 8; i++)
             {
-                var tempListing = driver.FindElementById("sja" +i); 
+                var tempListing = driver.FindElementById("sja" + i);
                 tempTitle = tempListing.Text;
                 tempLink = tempListing.GetAttribute("href");
                 IndeedClass tempJob = new IndeedClass(tempTitle, tempLink);
@@ -83,24 +83,24 @@ namespace JobSearch.Models
                         tempLink = tempListing2.GetAttribute("href");
                         IndeedClass tempJob = new IndeedClass(tempTitle, tempLink);
                         indeedJobs.Add(tempJob);
-                   }  
-               }
-               catch
-               {
-                   for(int j= 7; j<8; j++)  
-                   {
+                    }
+                }
+                catch
+                {
+                    for (int j = 7; j < 8; j++)
+                    {
                         var thirdLink = driver.FindElementByXPath("//*[@id='resultsCol']/div[28]/a[3]");
-                        var tempListing3 = driver.FindElementById("sja" +j); 
+                        var tempListing3 = driver.FindElementById("sja" + j);
                         tempTitle = tempListing3.Text;
                         tempLink = tempListing3.GetAttribute("href");
                         IndeedClass tempJob = new IndeedClass(tempTitle, tempLink);
                         indeedJobs.Add(tempJob);
-                   }
-                
+                    }
 
-               }
-           }
 
+                }
+            }
+            
             return indeedJobs;
         }
     }
