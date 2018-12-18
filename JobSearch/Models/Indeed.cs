@@ -60,7 +60,7 @@ namespace JobSearch.Models
             var locationForm = driver.FindElementByName("l");
 
 
-            // Type user name and password
+            // Type job title and location
             searchForm.SendKeys(jobName);
             locationForm.SendKeys("");
             for (int i = 0; i < 20; i++)
@@ -69,7 +69,7 @@ namespace JobSearch.Models
             }
             locationForm.SendKeys(jobLocation);
 
-            // and click the login button
+            // and click the submit button
             searchForm.Submit();
 
             List<IndeedClass> indeedJobs = new List<IndeedClass> { };
@@ -102,6 +102,7 @@ namespace JobSearch.Models
                             timeout++;
                         }
                         IWebElement company = driver.FindElement(By.Id("vjs-cn"));
+
                         while (driver.FindElements(By.Id("vjs-loc")).Count == 0 && timeout < 500)
                         {
                             Thread.Sleep(200);
@@ -113,7 +114,7 @@ namespace JobSearch.Models
                         tempLocation = location.Text;
                     }
                 }
-
+                // Create an instance ob the object and push to the list
                 IndeedClass tempJob = new IndeedClass(tempTitle, tempLink, tempCompany, tempLocation);
                 indeedJobs.Add(tempJob);
 
