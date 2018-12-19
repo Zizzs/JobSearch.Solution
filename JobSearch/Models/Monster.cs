@@ -18,16 +18,17 @@ namespace JobSearch.Models
         private string _company;
 
         private string _location;
+        private string _date;
 
 
 
-        MonsterClass(string title, string url, string company, string location)
+        MonsterClass(string title, string url, string company, string location, string date)
         {
             _title = title;
             _url = url;
             _company = company;
             _location = location;
-
+            _date = date;
         }
 
         public string GetTitle()
@@ -50,6 +51,10 @@ namespace JobSearch.Models
             return _location;
         }
 
+        public string GetDate()
+        {
+            return _date;
+        }
         // Initialize the Chrome Driver
         public static List<MonsterClass> RunSearch(string jobName, string jobLocation)
         {
@@ -84,14 +89,15 @@ namespace JobSearch.Models
             string tempLink = "";
             string tempCompany = "";
             string tempLocation = "No Location Specified";
+            string tempDate = "";
 
             Thread.Sleep(750);
             // IReadOnlyCollection<IWebElement> anchors = driver.FindElements(By.ClassName("card-content "));
             IWebElement number = driver.FindElement(By.XPath("//*[@id='ResultsScrollable']/div"));
             int count = int.Parse(number.GetAttribute("data-results-total"));
-            if (count > 10)
+            if (count > 20)
             {
-                count = 9;
+                count = 20;
             }
             Console.WriteLine(count);
             for (int i = 1; i < count; i++)
@@ -99,6 +105,10 @@ namespace JobSearch.Models
                 if (i == 3)
                 {
                     i = 4;
+                }
+                if (i == 10)
+                {
+                    i = 11;
                 }
                 else
                 {
@@ -128,8 +138,9 @@ namespace JobSearch.Models
                         }
 
                     }
-
-                    MonsterClass tempjob = new MonsterClass(tempTitle, tempLink, tempCompany, tempLocation);
+                    IWebElement date = driver.FindElement(By.XPath("//*/section[" + i + "]/div/div[3]/time"));
+                    tempDate = date.Text;
+                    MonsterClass tempjob = new MonsterClass(tempTitle, tempLink, tempCompany, tempLocation, tempDate);
                     monsterJobs.Add(tempjob);
                 }
             }
