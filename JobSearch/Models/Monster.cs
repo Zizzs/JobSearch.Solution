@@ -17,14 +17,14 @@ namespace JobSearch.Models
         private string _url;
         private string _company;
 
-        private string _location;
 
-        MonsterClass(string title, string url, string company, string location)
+
+        MonsterClass(string title, string url, string company)
         {
             _title = title;
             _url = url;
             _company = company;
-            _location = location;
+
         }
 
         public string GetTitle()
@@ -42,10 +42,6 @@ namespace JobSearch.Models
             return _company;
         }
 
-        public string GetLocation()
-        {
-            return _location;
-        }
         // Initialize the Chrome Driver
         public static List<MonsterClass> RunSearch(string jobName, string jobLocation)
         {
@@ -79,7 +75,7 @@ namespace JobSearch.Models
             string tempTitle = "";
             string tempLink = "";
             string tempCompany = "";
-            string tempLocation = "";
+
             Thread.Sleep(750);
             // IReadOnlyCollection<IWebElement> anchors = driver.FindElements(By.ClassName("card-content "));
             IWebElement number = driver.FindElement(By.XPath("//*[@id='ResultsScrollable']/div"));
@@ -105,16 +101,8 @@ namespace JobSearch.Models
                     tempLink = single.GetAttribute("href");
                     IWebElement company = driver.FindElement(By.XPath("//*/section[" + i + "]/div/div[2]/div[1]/a"));
                     tempCompany = company.Text;
-                    IWebElement location = driver.FindElement(By.XPath("//*/section[" + i + "]/div/div[2]/div[2]/a"));
-                    if (location.Text == "" || (!string.IsNullOrEmpty(location.Text)))
-                    {
-                        tempLocation = "No location";
-                    }
-                    else
-                    {
-                        tempLocation = location.Text;
-                    }
-                    MonsterClass tempjob = new MonsterClass(tempTitle, tempLink, tempCompany, tempLocation);
+
+                    MonsterClass tempjob = new MonsterClass(tempTitle, tempLink, tempCompany);
                     monsterJobs.Add(tempjob);
                 }
             }
