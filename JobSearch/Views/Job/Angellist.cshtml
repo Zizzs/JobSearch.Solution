@@ -33,7 +33,7 @@
     {
       @foreach(AngelListClass job in @Model)
         {
-          <a href="@job.GetUrl()"><p class="underlined underlined--gradient">@job.GetTitle()</p></a>
+          <a target="_blank" href="@job.GetUrl()"><p class="underlined underlined--gradient">@job.GetTitle()</p></a>
         }
     } else
     {
