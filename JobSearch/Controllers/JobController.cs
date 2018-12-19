@@ -116,20 +116,5 @@ namespace JobSearch.Controllers
             List<MonsterClass> model = MonsterClass.RunSearch(jobName, jobLocation);
             return View("Monster", model);
         }
-
-        [HttpGet("/jobs/angellist")]
-        public ActionResult Angellist()
-        {
-            List<AngelListClass> model = new List<AngelListClass>();
-            return View(model);
-        }
-
-        [HttpPost("/jobs/angellist")]
-        public ActionResult AngellistSearch(string jobName, string jobLocation)
-        {
-            List<AngelListClass> model = AngelListClass.RunSearch(jobName, jobLocation);
-            return View("Angellist", model);
-        }
-
     }
 }
