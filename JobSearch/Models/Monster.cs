@@ -17,13 +17,16 @@ namespace JobSearch.Models
         private string _url;
         private string _company;
 
+        private string _location;
 
 
-        MonsterClass(string title, string url, string company)
+
+        MonsterClass(string title, string url, string company, string location)
         {
             _title = title;
             _url = url;
             _company = company;
+            _location = location;
 
         }
 
@@ -40,6 +43,11 @@ namespace JobSearch.Models
         public string GetCompany()
         {
             return _company;
+        }
+
+        public string GetLocation()
+        {
+            return _location;
         }
 
         // Initialize the Chrome Driver
@@ -75,14 +83,15 @@ namespace JobSearch.Models
             string tempTitle = "";
             string tempLink = "";
             string tempCompany = "";
+            string tempLocation = "No Location Specified";
 
             Thread.Sleep(750);
             // IReadOnlyCollection<IWebElement> anchors = driver.FindElements(By.ClassName("card-content "));
             IWebElement number = driver.FindElement(By.XPath("//*[@id='ResultsScrollable']/div"));
             int count = int.Parse(number.GetAttribute("data-results-total"));
-            if (count > 25)
+            if (count > 10)
             {
-                count = 25;
+                count = 9;
             }
             Console.WriteLine(count);
             for (int i = 1; i < count; i++)
@@ -99,10 +108,28 @@ namespace JobSearch.Models
 
                     tempTitle = single.Text;
                     tempLink = single.GetAttribute("href");
+
                     IWebElement company = driver.FindElement(By.XPath("//*/section[" + i + "]/div/div[2]/div[1]/a"));
                     tempCompany = company.Text;
 
-                    MonsterClass tempjob = new MonsterClass(tempTitle, tempLink, tempCompany);
+                    List<IWebElement> location = new List<IWebElement>();
+                    location.AddRange(driver.FindElements(By.XPath("//*/section[" + i + "]/div/div[2]/div[2]/a")));
+
+
+                    if (location.Count >= 1)
+                    {
+                        if (!string.IsNullOrEmpty(location[0].Text))
+                        {
+                            tempLocation = location[0].Text;
+                        }
+                        else if (string.IsNullOrEmpty(location[0].Text))
+                        {
+                            tempLocation = "Location not listed";
+                        }
+
+                    }
+
+                    MonsterClass tempjob = new MonsterClass(tempTitle, tempLink, tempCompany, tempLocation);
                     monsterJobs.Add(tempjob);
                 }
             }
