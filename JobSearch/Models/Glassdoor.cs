@@ -14,11 +14,12 @@ namespace JobSearch.Models
     {
         private string _title;
         private string _url;
-
-        GlassdoorClass(string title, string url)
+        private string _company;
+        GlassdoorClass(string title, string url, string company)
         {
             _title = title;
             _url = url;
+            _company = company;
         }
 
         public string GetTitle()
@@ -30,13 +31,18 @@ namespace JobSearch.Models
         {
             return _url;
         }
+
+        public string GetCompany()
+        {
+            return _company;
+        }
         // Initialize the Chrome Driver
         public static List<GlassdoorClass> RunSearch(string jobName, string jobLocation)
         {
 
             ChromeDriver driver = new ChromeDriver("/Users/Guest/Desktop/JobSearch.Solution/JobSearch/wwwroot/drivers");
 
-            
+
             // Go to the home page
             driver.Navigate().GoToUrl("https://www.glassdoor.com/index.htm");
             driver.Manage().Cookies.DeleteAllCookies();
@@ -60,14 +66,19 @@ namespace JobSearch.Models
             List<GlassdoorClass> glassdoorJobs = new List<GlassdoorClass> { };
             string tempTitle = "";
             string tempLink = "";
+            string tempCompany = "";
 
-
-            IReadOnlyCollection<IWebElement> anchors = driver.FindElements(By.ClassName("jobLink"));
-            foreach (IWebElement link in anchors)
+            IList<IWebElement> anchors = driver.FindElements(By.ClassName("jobLink"));
+            for (int i = 1; i < 30; i++)
             {
-                tempTitle = link.Text;
-                tempLink = link.GetAttribute("href");
-                GlassdoorClass tempjob = new GlassdoorClass(tempTitle, tempLink);
+                IWebElement title = driver.FindElement(By.XPath("//*[@id='MainCol']/div/ul/li[" + i + "]/div[2]/div[1]/div[1]/a"));
+                tempTitle = title.Text;
+                tempLink = title.GetAttribute("href");
+
+                IWebElement company = driver.FindElement(By.XPath("//*[@id='MainCol']/div/ul/li[" + i + "]/div[2]/div[2]/div"));
+                tempCompany = company.Text;
+
+                GlassdoorClass tempjob = new GlassdoorClass(tempTitle, tempLink, tempCompany);
                 glassdoorJobs.Add(tempjob);
             }
 

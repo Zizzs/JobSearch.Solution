@@ -91,7 +91,7 @@ namespace JobSearch.Models
 
 
 
-            for (int i = 0; i < links.Count; i++)
+            for (int i = 0; i < links.Count - 1; i++)
             {
                 links = driver.FindElements(By.ClassName("turnstileLink"));
                 Thread.Sleep(500);
