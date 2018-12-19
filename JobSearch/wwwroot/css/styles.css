@@ -33,10 +33,13 @@ body {
 .nav-tabs{
     background-color: #8FC1E3;
     border-radius: 10px;
+    border-left: #F7F9FB;
+    border-right: #F7F9FB;
 }
 .nav-tabs > li > a:hover {
     background-color: #5085A5;
     border-radius: 10px;
+    border: #F7F9FB solid 2px;
 }
 a:link {
     color: #31708E;
