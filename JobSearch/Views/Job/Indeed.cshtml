@@ -20,18 +20,21 @@
     <p>Search Indeed By Job TItle and Job Location</p>
     <form action = "/jobs/indeed" method="post">
             <label for='jobName'>Job Title</label>
-            <input id='jobName' name='jobName' type='text' required><br>
+            <input class='jobName' name='jobName' type='text' required>
             <label for='jobLocation'>Job Location</label>
-            <input id='jobLocation' name='jobLocation' type='text' required><br>
+            <input class='jobLocation' name='jobLocation' type='text' required>
             <button type='submit'>Find a job</button>
     </form>
   </div>
   <div class="formClass">
-    <p>Output</p>
+    <p class="jobOutput">Indeed Results:</p>
     <ul>
-    @foreach(IndeedClass job in @Model)
+    @for(int i=0; i< @Model.Count; i++) 
     {
-      <a href="@job.GetUrl()"><h2>@job.GetTitle()</h2></a>
+     
+        <a target="_blank" href="@Model[i].GetUrl()"><h4 class="underlined underlined--gradient"> <b>@Model[i].GetTitle()&nbsp;&nbsp;</b> <i>@Model[i].GetCompany()&nbsp;</i><small>@Model[i].GetLocation(), @Model[i].GetDate()</small></h4> </a>
+       
+      
     }
     </ul>
   </div>

@@ -15,11 +15,20 @@ namespace JobSearch.Models
     {
         private string _title;
         private string _url;
+        private string _company;
 
-        MonsterClass(string title, string url)
+        private string _location;
+        private string _date;
+
+
+
+        MonsterClass(string title, string url, string company, string location, string date)
         {
             _title = title;
             _url = url;
+            _company = company;
+            _location = location;
+            _date = date;
         }
 
         public string GetTitle()
@@ -31,6 +40,22 @@ namespace JobSearch.Models
         {
             return _url;
         }
+
+        public string GetCompany()
+        {
+            return _company;
+        }
+
+        public string GetLocation()
+        {
+            return _location;
+        }
+
+        public string GetDate()
+        {
+            return _date;
+        }
+        // Initialize the Chrome Driver
         public static List<MonsterClass> RunSearch(string jobName, string jobLocation)
         {
             // Check operating system
@@ -77,13 +102,17 @@ namespace JobSearch.Models
             List<MonsterClass> monsterJobs = new List<MonsterClass> { };
             string tempTitle = "";
             string tempLink = "";
+            string tempCompany = "";
+            string tempLocation = "No Location Specified";
+            string tempDate = "";
+
             Thread.Sleep(750);
             // IReadOnlyCollection<IWebElement> anchors = driver.FindElements(By.ClassName("card-content "));
             IWebElement number = driver.FindElement(By.XPath("//*[@id='ResultsScrollable']/div"));
             int count = int.Parse(number.GetAttribute("data-results-total"));
-            if (count > 25)
+            if (count > 20)
             {
-                count = 25;
+                count = 20;
             }
             Console.WriteLine(count);
             for (int i = 1; i < count; i++)
@@ -92,13 +121,41 @@ namespace JobSearch.Models
                 {
                     i = 4;
                 }
+                if (i == 10)
+                {
+                    i = 11;
+                }
                 else
                 {
+
                     IWebElement single = driver.FindElement(By.XPath("//*/section[" + i + "]/div/div[2]/header/h2/a"));
+
 
                     tempTitle = single.Text;
                     tempLink = single.GetAttribute("href");
-                    MonsterClass tempjob = new MonsterClass(tempTitle, tempLink);
+
+                    IWebElement company = driver.FindElement(By.XPath("//*/section[" + i + "]/div/div[2]/div[1]/a"));
+                    tempCompany = company.Text;
+
+                    List<IWebElement> location = new List<IWebElement>();
+                    location.AddRange(driver.FindElements(By.XPath("//*/section[" + i + "]/div/div[2]/div[2]/a")));
+
+
+                    if (location.Count >= 1)
+                    {
+                        if (!string.IsNullOrEmpty(location[0].Text))
+                        {
+                            tempLocation = location[0].Text;
+                        }
+                        else if (string.IsNullOrEmpty(location[0].Text))
+                        {
+                            tempLocation = "Location not listed";
+                        }
+
+                    }
+                    IWebElement date = driver.FindElement(By.XPath("//*/section[" + i + "]/div/div[3]/time"));
+                    tempDate = date.Text;
+                    MonsterClass tempjob = new MonsterClass(tempTitle, tempLink, tempCompany, tempLocation, tempDate);
                     monsterJobs.Add(tempjob);
                 }
             }

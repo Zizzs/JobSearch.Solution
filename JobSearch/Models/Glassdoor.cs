@@ -14,11 +14,12 @@ namespace JobSearch.Models
     {
         private string _title;
         private string _url;
-
-        GlassdoorClass(string title, string url)
+        private string _company;
+        GlassdoorClass(string title, string url, string company)
         {
             _title = title;
             _url = url;
+            _company = company;
         }
 
         public string GetTitle()
@@ -30,6 +31,12 @@ namespace JobSearch.Models
         {
             return _url;
         }
+
+        public string GetCompany()
+        {
+            return _company;
+        }
+        // Initialize the Chrome Driver
         public static List<GlassdoorClass> RunSearch(string jobName, string jobLocation)
         {
             // Check operating system
@@ -50,15 +57,20 @@ namespace JobSearch.Models
 
             ChromeDriver driver = new ChromeDriver(driverLocation);
 
+
             // Go to the home page
-            driver.Navigate().GoToUrl("https://www.glassdoor.com/index.htm");
+            driver.Navigate().GoToUrl("https://www.glassdoor.co.in/Jobs/Glassdoor-Jobs-E100431.htm");
             driver.Manage().Cookies.DeleteAllCookies();
             // Get the page elements
-            var searchForm = driver.FindElementById("KeywordSearch");
-            var locationForm = driver.FindElementById("LocationSearch");
+            var searchForm = driver.FindElementById("sc.keyword");
+            var locationForm = driver.FindElementById("sc.location");
 
 
-            // Type user name and password
+            searchForm.SendKeys("");
+            for (int i = 0; i < 20; i++)
+            {
+                searchForm.SendKeys(Keys.Backspace);
+            }
             searchForm.SendKeys(jobName);
             locationForm.SendKeys("");
             for (int i = 0; i < 20; i++)
@@ -73,14 +85,19 @@ namespace JobSearch.Models
             List<GlassdoorClass> glassdoorJobs = new List<GlassdoorClass> { };
             string tempTitle = "";
             string tempLink = "";
+            string tempCompany = "";
 
-
-            IReadOnlyCollection<IWebElement> anchors = driver.FindElements(By.ClassName("jobLink"));
-            foreach (IWebElement link in anchors)
+            IList<IWebElement> anchors = driver.FindElements(By.ClassName("jobLink"));
+            for (int i = 1; i < 30; i++)
             {
-                tempTitle = link.Text;
-                tempLink = link.GetAttribute("href");
-                GlassdoorClass tempjob = new GlassdoorClass(tempTitle, tempLink);
+                IWebElement title = driver.FindElement(By.XPath("//*[@id='MainCol']/div/ul/li[" + i + "]/div[2]/div[1]/div[1]/a"));
+                tempTitle = title.Text;
+                tempLink = title.GetAttribute("href");
+
+                IWebElement company = driver.FindElement(By.XPath("//*[@id='MainCol']/div/ul/li[" + i + "]/div[2]/div[2]/div"));
+                tempCompany = company.Text;
+
+                GlassdoorClass tempjob = new GlassdoorClass(tempTitle, tempLink, tempCompany);
                 glassdoorJobs.Add(tempjob);
             }
 

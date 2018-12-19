@@ -18,6 +18,7 @@
   <div id="stackoverflowLogo"><img class="logoAll" src="~/img/stackoverflow.png"></div>
   <div id="glassdoorLogo"><img class="logoAll" src="~/img/glassdoor.png"></div>
   <div id="craigslistLogo"><img class="logoAll" src="~/img/craigslist.png"></div>
+  <div id="monsterLogo"><img class="logoAll" src="~/img/monsterlogo.png"></div>
 </div>
 <br>
 <br>
@@ -25,61 +26,77 @@
   <div id="formLeft" class="formClass">
     <p>Search All Sites By Job TItle and Job Location</p>
     <form action = "/jobs/all" method="post">
-            <label for='jobName'>Job Title</label>
-            <input id='jobName' name='jobName' type='text' required><br>
-            <label for='jobLocation'>Job Location</label>
-            <input id='jobLocation' name='jobLocation' type='text' required><br>
+            <label class='jobName' for='jobName'>Job Title</label>
+            <input name='jobName' type='text' required>
+            <label class='jobLocation' for='jobLocation'>Job Location</label>
+            <input name='jobLocation' type='text' required>
             <button type='submit'>Find a job</button>
     </form>
   </div>
   <div class="formClass">
-    <p>Output</p>
+    <p class="jobOutput">StackOverflow Results:</p>
     <ul>
-    <h3>stackoverflow Jobs:</h3>
     @if (@Model["stackoverflow"].Count != 0)
     {
       @foreach(StackOverflow job in @Model["stackoverflow"])
         {
-          <a class="exportLink" href="@job.GetUrl()"><p class="exportLink">@job.GetTitle()</p ></a>
+          <a target="_blank" class="exportLink" href="@job.GetUrl()"><p class="underlined underlined--gradient">@job.GetTitle()</p ></a>
         }
     } else
     {
       <p> </p>
     }
     </ul>
+    <br>
+    <p class="jobOutput">Monster Results:</p>
     <ul>
-    <h3>Monster Jobs:</h3>
     @if (@Model["monster"].Count != 0)
     {
       @foreach(MonsterClass job in @Model["monster"])
         {
-          <a class="exportLink" href="@job.GetUrl()"><p class="exportLink">@job.GetTitle()</p ></a>
+          <a target="_blank" class="exportLink" href="@job.GetUrl()"><p class="underlined underlined--gradient">@job.GetTitle()</p ></a>
         }
     } else
     {
       <p> </p>
     }
     </ul>
+    <br>
+    <p class="jobOutput">Glassdoor Results:</p>
     <ul>
-    <h3>Craigslist Jobs</h3>
-    @if (@Model["craigslist"].Count != 0)
+    @if (@Model["glassdoor"].Count != 0)
     {
-      @foreach(CraigslistClass job in @Model["craigslist"])
+      @foreach(GlassdoorClass job in @Model["glassdoor"])
         {
-          <a class="exportLink" href="@job.GetUrl()"><p class="exportLink">@job.GetTitle()</p ></a>
+          <a target="_blank" class="exportLink" href="@job.GetUrl()"><p class="underlined underlined--gradient">@job.GetTitle()</p ></a>
         }
     }else
     {
       <p> </p>
     }
     </ul>
+    <br>
+    <p class="jobOutput">Indeed Results:</p>
     <ul>
-    <h3>Glassdoor Jobs</h3>
-    @if (@Model["glassdoor"].Count != 0)
+    @if (@Model["indeed"].Count != 0)
     {
-      @foreach(GlassdoorClass job in @Model["glassdoor"])
+      @foreach(IndeedClass job in @Model["indeed"])
         {
-          <a href="@job.GetUrl()"><p class="exportLink">@job.GetTitle()</p ></a>
+          <a target="_blank" href="@job.GetUrl()"><p class="underlined underlined--gradient">@job.GetTitle()</p ></a>
+        }
+    }else
+    {
+      <p> </p>
+    }
+    </ul>
+    <br>
+    <p class="jobOutput">CraigsList Results:</p>
+    <ul>
+    @if (@Model["craigslist"].Count != 0)
+    {
+      @foreach(CraigslistClass job in @Model["craigslist"])
+        {
+          <a class="exportLink" href="@job.GetUrl()"><p class="underlined underlined--gradient">@job.GetTitle()</p ></a>
         }
     }else
     {

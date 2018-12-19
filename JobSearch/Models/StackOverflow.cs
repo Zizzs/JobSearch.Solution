@@ -7,7 +7,7 @@ using System.Text;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System.Threading;
-using OpenQA.Selenium.Support.UI;
+
 
 namespace JobSearch.Models
 {
@@ -16,11 +16,15 @@ namespace JobSearch.Models
         private string _title;
         private string _url;
         private string _company;
-        public StackOverflow(string title, string url, string company)
+        private string _location;
+        private string _date;
+        public StackOverflow(string title, string url, string company, string location, string date)
         {
             _title = title;
             _url = url;
             _company = company;
+            _location = location;
+            _date = date;
         }
         public string GetTitle()
         {
@@ -36,6 +40,15 @@ namespace JobSearch.Models
             return _company;
         }
 
+        public string GetLocation()
+        {
+            return _location;
+        }
+        public string GetDate()
+        {
+            return _date;
+        }
+        // Initialize the Chrome Driver
         public static List<StackOverflow> RunSearch(string jobName, string jobLocation)
         {
             // Check operating system
@@ -76,6 +89,8 @@ namespace JobSearch.Models
             string tempTitle = "";
             string tempLink = "";
             string tempCompany = "";
+            string tempDate = "";
+            string tempLocation = "";
             bool existsElement(int i)
             {
                 try
@@ -99,7 +114,12 @@ namespace JobSearch.Models
                         tempTitle = tempListing.Text;
                         tempLink = tempListing.GetAttribute("href");
                         tempCompany = tempList.Text;
-                        StackOverflow tempJob = new StackOverflow(tempTitle, tempLink, tempCompany);
+                        IWebElement location = driver.FindElement(By.XPath("//*[@id='mainbar']/div[2]/div/div[" + i + "]/div[3]/div[2]/span[2]"));
+                        tempLocation = location.Text;
+                        IWebElement date = driver.FindElement(By.XPath("//*[@id='mainbar']/div[2]/div/div[" + i + "]/div[3]/div[1]/span[2]"));
+                        tempDate = date.Text;
+
+                        StackOverflow tempJob = new StackOverflow(tempTitle, tempLink, tempCompany, tempLocation, tempDate);
                         stackOverflowJobs.Add(tempJob);
                     }
                 }
@@ -115,7 +135,12 @@ namespace JobSearch.Models
                         tempTitle = tempListing.Text;
                         tempLink = tempListing.GetAttribute("href");
                         tempCompany = tempList.Text;
-                        StackOverflow tempJob = new StackOverflow(tempTitle, tempLink, tempCompany);
+                        IWebElement location = driver.FindElement(By.XPath("//*[@id='mainbar']/div[2]/div/div[" + i + "]/div[3]/div[2]/span[2]"));
+                        tempLocation = location.Text;
+                        IWebElement date = driver.FindElement(By.XPath("//*[@id='mainbar']/div[2]/div/div[" + i + "]/div[3]/div[1]/span[2]"));
+                        tempDate = date.Text;
+
+                        StackOverflow tempJob = new StackOverflow(tempTitle, tempLink, tempCompany, tempLocation, tempDate);
                         stackOverflowJobs.Add(tempJob);
                     }
                 }
