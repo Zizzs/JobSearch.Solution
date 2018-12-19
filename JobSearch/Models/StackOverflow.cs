@@ -7,7 +7,7 @@ using System.Text;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System.Threading;
-using OpenQA.Selenium.Support.UI;
+
 
 namespace JobSearch.Models
 {
