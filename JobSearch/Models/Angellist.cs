@@ -46,7 +46,7 @@ namespace JobSearch.Models
             }
             else
             {
-                driverLocation = "../JobSearch.Solution/JobSearch/wwwroot/drivers";
+                driverLocation = "../JobSearch/wwwroot/drivers";
             }
             // Initialize the Chrome Driver
 
