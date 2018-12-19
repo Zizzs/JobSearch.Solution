@@ -157,20 +157,21 @@ HTML SCSS Result EDIT ON body {
 }
 
 #frontDivOne {
-    margin-top: 25%;
-    margin-left: 40%;
     font-family: 'Acme', sans-serif;
 }
 
 #frontDivTwo {
-    margin-left: 25%;
     font-family: 'Acme', sans-serif;
 }
 
 #glassdoorLogo {
     margin-top: 10px;
 }
-
+.job{
+  font-size: 30px;
+  text-align: center;
+  margin-top: 30px;
+}
 #craigslistLogo {
     margin-top: 8px;
 }
