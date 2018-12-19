@@ -111,7 +111,7 @@ namespace JobSearch.Models
                 GlassdoorClass tempjob = new GlassdoorClass(tempTitle, tempLink, tempCompany);
                 glassdoorJobs.Add(tempjob);
             }
-
+            driver.Close();
             return glassdoorJobs;
         }
     }
