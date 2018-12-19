@@ -34,9 +34,8 @@
     </form>
   </div>
   <div class="formClass">
-    <p>Output</p>
+    <p class="jobOutput">StackOverflow Results:</p>
     <ul>
-    <h3>StackOverflow Jobs:</h3>
     @if (@Model["stackoverflow"].Count != 0)
     {
       @foreach(StackOverflow job in @Model["stackoverflow"])
@@ -48,8 +47,9 @@
       <p> </p>
     }
     </ul>
+    <br>
+    <p class="jobOutput">Monster Results:</p>
     <ul>
-    <h3>Monster Jobs:</h3>
     @if (@Model["monster"].Count != 0)
     {
       @foreach(MonsterClass job in @Model["monster"])
@@ -61,8 +61,9 @@
       <p> </p>
     }
     </ul>
+    <br>
+    <p class="jobOutput">CraigsList Results:</p>
     <ul>
-    <h3>CraigsList Jobs:</h3>
     @if (@Model["craigslist"].Count != 0)
     {
       @foreach(CraigslistClass job in @Model["craigslist"])
@@ -74,11 +75,26 @@
       <p> </p>
     }
     </ul>
+    <br>
+    <p class="jobOutput">Glassdoor Results:</p>
     <ul>
-    <h3>Glassdoor Jobs:</h3>
     @if (@Model["glassdoor"].Count != 0)
     {
       @foreach(GlassdoorClass job in @Model["glassdoor"])
+        {
+          <a href="@job.GetUrl()"><p class="underlined underlined--gradient">@job.GetTitle()</p ></a>
+        }
+    }else
+    {
+      <p> </p>
+    }
+    </ul>
+    <br>
+    <p class="jobOutput">Indeed Results:</p>
+    <ul>
+    @if (@Model["indeed"].Count != 0)
+    {
+      @foreach(IndeedClass job in @Model["indeed"])
         {
           <a href="@job.GetUrl()"><p class="underlined underlined--gradient">@job.GetTitle()</p ></a>
         }
