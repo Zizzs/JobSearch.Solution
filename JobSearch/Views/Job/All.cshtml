@@ -41,7 +41,7 @@
     {
       @foreach(StackOverflow job in @Model["stackoverflow"])
         {
-          <a class="exportLink" href="@job.GetUrl()"><p class="underlined underlined--gradient">@job.GetTitle()</p ></a>
+          <a target="_blank" class="exportLink" href="@job.GetUrl()"><p class="underlined underlined--gradient">@job.GetTitle()</p ></a>
         }
     } else
     {
@@ -54,7 +54,7 @@
     {
       @foreach(MonsterClass job in @Model["monster"])
         {
-          <a class="exportLink" href="@job.GetUrl()"><p class="underlined underlined--gradient">@job.GetTitle()</p ></a>
+          <a target="_blank" class="exportLink" href="@job.GetUrl()"><p class="underlined underlined--gradient">@job.GetTitle()</p ></a>
         }
     } else
     {
@@ -67,7 +67,7 @@
     {
       @foreach(CraigslistClass job in @Model["craigslist"])
         {
-          <a class="exportLink" href="@job.GetUrl()"><p class="underlined underlined--gradient">@job.GetTitle()</p ></a>
+          <a target="_blank" class="exportLink" href="@job.GetUrl()"><p class="underlined underlined--gradient">@job.GetTitle()</p ></a>
         }
     }else
     {
@@ -80,7 +80,7 @@
     {
       @foreach(GlassdoorClass job in @Model["glassdoor"])
         {
-          <a href="@job.GetUrl()"><p class="underlined underlined--gradient">@job.GetTitle()</p ></a>
+          <a target="_blank" href="@job.GetUrl()"><p class="underlined underlined--gradient">@job.GetTitle()</p ></a>
         }
     }else
     {
