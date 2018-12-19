@@ -20,9 +20,9 @@
     <p>Search StackOverflow By Job TItle and Job Location</p>
     <form action = "/jobs/stackoverflow" method="post">
             <label for='jobName'>Job Title</label>
-            <input id='jobName' name='jobName' type='text' required><br>
+            <input class='jobName' name='jobName' type='text' required>
             <label for='jobLocation'>Job Location</label>
-            <input id='jobLocation' name='jobLocation' type='text' required><br>
+            <input class='jobLocation' name='jobLocation' type='text' required>
             <button type='submit'>Find a job</button>
     </form>
   </div>
@@ -33,8 +33,8 @@
     {
       @foreach(StackOverflow job in @Model)
         {
-          <a href="@job.GetUrl()"><h2> @job.GetTitle()</h2></a>
-          <h2>Company:@job.GetCompany()</h2>
+          <a href="@job.GetUrl()"><p class="underlined underlined--gradient"> @job.GetTitle()</p></a>
+          <p class="underlined underlined--gradient">Company:@job.GetCompany()</p>
         }
     }
     </ul>

@@ -13,16 +13,16 @@
   </ul>
 </div>
 <br>
-<img class="logo" src="~/img/glassdoor.png">
+<img class="logo" src="~/img/monsterlogo.png">
 <br>
 <div class="wrapper">
   <div id="formLeft" class="formClass">
     <p>Search Monster By Job Title and Job Location</p>
     <form action = "/jobs/monster" method="post">
             <label for='jobName'>Job Title</label>
-            <input id='jobName' name='jobName' type='text' required><br>
+            <input class='jobName' name='jobName' type='text' required>
             <label for='jobLocation'>Job Location</label>
-            <input id='jobLocation' name='jobLocation' type='text' required><br>
+            <input class='jobLocation' name='jobLocation' type='text' required>
             <button type='submit'>Find a job</button>
     </form>
   </div>
@@ -33,7 +33,7 @@
     {
       @foreach(MonsterClass job in @Model)
         {
-          <a href="@job.GetUrl()"><h2>@job.GetTitle()</h2></a>
+          <a href="@job.GetUrl()"><p class="underlined underlined--gradient">@job.GetTitle()</p></a>
         }
     } else
     {
