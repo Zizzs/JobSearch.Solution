@@ -31,11 +31,28 @@ namespace JobSearch.Models
         {
             return _url;
         }
-        // Initialize the Chrome Driver
         public static List<AngelListClass> RunSearch(string jobName, string jobLocation)
         {
 
-            ChromeDriver driver = new ChromeDriver("/Users/Guest/Desktop/JobSearch.Solution/JobSearch/wwwroot/drivers");
+            // Check operating system
+            string driverLocation = "";
+            string osName = System.Runtime.InteropServices.RuntimeInformation.OSDescription.ToLower();
+
+            Console.WriteLine(osName);
+
+            if (osName.Contains("windows"))
+            {
+                driverLocation = "..\\JobSearch\\wwwroot\\drivers-win";
+            }
+            else
+            {
+                driverLocation = "../JobSearch/wwwroot/drivers";
+            }
+            // Initialize the Chrome Driver
+
+            ChromeDriver driver = new ChromeDriver(driverLocation);
+
+            // Go to the home page            
             driver.Navigate().GoToUrl("https://angel.co/login");
             Thread.Sleep(100);
             var emailForm = driver.FindElementById("user_email");

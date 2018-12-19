@@ -51,15 +51,26 @@ namespace JobSearch.Models
         // Initialize the Chrome Driver
         public static List<StackOverflow> RunSearch(string jobName, string jobLocation)
         {
+            // Check operating system
+            string driverLocation = "";
+            string osName = System.Runtime.InteropServices.RuntimeInformation.OSDescription.ToLower();
 
-            ChromeDriver driver = new ChromeDriver("/Users/Guest/Desktop/JobSearch.Solution/JobSearch/wwwroot/drivers");
+            Console.WriteLine(osName);
+
+            if (osName.Contains("windows"))
+            {
+                driverLocation = "..\\JobSearch\\wwwroot\\drivers-win";
+            }
+            else
+            {
+                driverLocation = "../JobSearch/wwwroot/drivers";
+            }
+            // Initialize the Chrome Driver
+
+            ChromeDriver driver = new ChromeDriver(driverLocation);
 
             // Go to the home page
-            //             IWebElement myDynamicElement =
-            // (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.id("usrUTils")));
 
-
-            // driver.Url("https://stackoverflow.com/jobs");
             driver.Navigate().GoToUrl("https://stackoverflow.com/jobs");
 
             // Get the page elements

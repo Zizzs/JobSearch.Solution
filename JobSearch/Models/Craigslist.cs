@@ -48,7 +48,23 @@ namespace JobSearch.Models
         public static List<CraigslistClass> RunSearch(string jobName, string jobLocation)
         {
 
-            ChromeDriver driver = new ChromeDriver("/Users/Guest/Desktop/JobSearch.Solution/JobSearch/wwwroot/drivers");
+            // Check operating system
+            string driverLocation = "";
+            string osName = System.Runtime.InteropServices.RuntimeInformation.OSDescription.ToLower();
+
+            Console.WriteLine(osName);
+
+            if (osName.Contains("windows"))
+            {
+                driverLocation = "..\\JobSearch\\wwwroot\\drivers-win";
+            }
+            else
+            {
+                driverLocation = "../JobSearch/wwwroot/drivers";
+            }
+            // Initialize the Chrome Driver
+
+            ChromeDriver driver = new ChromeDriver(driverLocation);
 
             // Go to the home page
             driver.Navigate().GoToUrl("https://" + jobLocation + ".craigslist.org/d/jobs/search/jjj");

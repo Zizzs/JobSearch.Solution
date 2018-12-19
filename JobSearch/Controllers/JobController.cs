@@ -20,10 +20,12 @@ namespace JobSearch.Controllers
             List<CraigslistClass> craigslist = new List<CraigslistClass>();
             List<MonsterClass> monster = new List<MonsterClass>();
             List<StackOverflow> stackoverflow = new List<StackOverflow>();
+            List<IndeedClass> indeed = new List<IndeedClass>();
             model.Add("glassdoor", glassdoor);
             model.Add("craigslist", craigslist);
             model.Add("monster", monster);
             model.Add("stackoverflow", stackoverflow);
+            model.Add("indeed", indeed);
             return View(model);
         }
 
@@ -35,10 +37,12 @@ namespace JobSearch.Controllers
             List<CraigslistClass> craigslist = CraigslistClass.RunSearch(jobName, jobLocation);
             List<MonsterClass> monster = MonsterClass.RunSearch(jobName, jobLocation);
             List<StackOverflow> stackoverflow = StackOverflow.RunSearch(jobName, jobLocation);
+            List<IndeedClass> indeed = IndeedClass.RunSearch(jobName, jobLocation);
             model.Add("glassdoor", glassdoor);
             model.Add("craigslist", craigslist);
             model.Add("monster", monster);
             model.Add("stackoverflow", stackoverflow);
+            model.Add("indeed", indeed);
             return View("All", model);
         }
 
