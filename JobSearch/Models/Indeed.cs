@@ -19,13 +19,16 @@ namespace JobSearch.Models
         private string _company;
         private string _location;
 
+        private string _date;
 
-        IndeedClass(string title, string url, string company, string location)
+
+        IndeedClass(string title, string url, string company, string location, string date)
         {
             _title = title;
             _url = url;
             _company = company;
             _location = location;
+            _date = date;
         }
 
         public string GetTitle()
@@ -46,6 +49,10 @@ namespace JobSearch.Models
             return _location;
         }
 
+        public string GetDate()
+        {
+            return _date;
+        }
         // Initialize the Chrome Driver
         public static List<IndeedClass> RunSearch(string jobName, string jobLocation)
         {
@@ -77,6 +84,7 @@ namespace JobSearch.Models
             string tempLink = "";
             string tempCompany = "";
             string tempLocation = "";
+            string tempDate = "";
 
 
             IList<IWebElement> links = driver.FindElements(By.ClassName("turnstileLink"));
@@ -86,9 +94,13 @@ namespace JobSearch.Models
             for (int i = 0; i < links.Count; i++)
             {
                 links = driver.FindElements(By.ClassName("turnstileLink"));
+                Thread.Sleep(500);
+                if (string.IsNullOrEmpty(links[i].Text))
+                {
+                    continue;
+                }
 
-
-                if (!string.IsNullOrEmpty(links[i].Text))
+                else if (!string.IsNullOrEmpty(links[i].Text))
                 {
                     if (links[i].GetAttribute("data-tn-element") == "jobTitle")
                     {
@@ -98,24 +110,30 @@ namespace JobSearch.Models
                         int timeout = 0;
                         while (driver.FindElements(By.Id("vjs-cn")).Count == 0 && timeout < 500)
                         {
-                            Thread.Sleep(200);
+                            Thread.Sleep(100);
                             timeout++;
                         }
                         IWebElement company = driver.FindElement(By.Id("vjs-cn"));
 
                         while (driver.FindElements(By.Id("vjs-loc")).Count == 0 && timeout < 500)
                         {
-                            Thread.Sleep(200);
+                            Thread.Sleep(100);
                             timeout++;
                         }
                         IWebElement location = driver.FindElement(By.Id("vjs-loc"));
+                        while (driver.FindElements(By.Id("vjs-loc")).Count == 0 && timeout < 500)
+                        {
+                            timeout++;
+                        }
+                        IWebElement date = driver.FindElement(By.CssSelector("#vjs-footer > div > div > span.date"));
 
                         tempCompany = company.Text;
                         tempLocation = location.Text;
+                        tempDate = date.Text;
                     }
                 }
                 // Create an instance ob the object and push to the list
-                IndeedClass tempJob = new IndeedClass(tempTitle, tempLink, tempCompany, tempLocation);
+                IndeedClass tempJob = new IndeedClass(tempTitle, tempLink, tempCompany, tempLocation, tempDate);
                 indeedJobs.Add(tempJob);
 
             }
