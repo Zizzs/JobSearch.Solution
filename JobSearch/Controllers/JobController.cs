@@ -20,10 +20,10 @@ namespace JobSearch.Controllers
             List<CraigslistClass> craigslist = new List<CraigslistClass>();
             List<MonsterClass> monster = new List<MonsterClass>();
             List<StackOverflow> stackoverflow = new List<StackOverflow>();
-            model.Add("glassdoor" , glassdoor);
-            model.Add("craigslist" , craigslist);
-            model.Add("monster" , monster);
-            model.Add("stackoverflow" , stackoverflow);
+            model.Add("glassdoor", glassdoor);
+            model.Add("craigslist", craigslist);
+            model.Add("monster", monster);
+            model.Add("stackoverflow", stackoverflow);
             return View(model);
         }
 
@@ -32,14 +32,14 @@ namespace JobSearch.Controllers
         {
             Dictionary<string, object> model = new Dictionary<string, object>();
             List<GlassdoorClass> glassdoor = GlassdoorClass.RunSearch(jobName, jobLocation);
-            List<CraigslistClass> craigslist = CraigslistClass.RunSearch(jobName);
+            List<CraigslistClass> craigslist = CraigslistClass.RunSearch(jobName, jobLocation);
             List<MonsterClass> monster = MonsterClass.RunSearch(jobName, jobLocation);
             List<StackOverflow> stackoverflow = StackOverflow.RunSearch(jobName, jobLocation);
-            model.Add("glassdoor" , glassdoor);
-            model.Add("craigslist" , craigslist);
-            model.Add("monster" , monster);
-            model.Add("stackoverflow" , stackoverflow);
-            return View("All" , model);
+            model.Add("glassdoor", glassdoor);
+            model.Add("craigslist", craigslist);
+            model.Add("monster", monster);
+            model.Add("stackoverflow", stackoverflow);
+            return View("All", model);
         }
 
         [HttpGet("/jobs/stackoverflow")]
@@ -82,7 +82,7 @@ namespace JobSearch.Controllers
         {
             List<GlassdoorClass> model = GlassdoorClass.RunSearch(jobName, jobLocation);
             return View("Glassdoor", model);
-            
+
         }
 
         [HttpGet("/jobs/craigslist")]
@@ -93,9 +93,9 @@ namespace JobSearch.Controllers
         }
 
         [HttpPost("/jobs/craigslist")]
-        public ActionResult CraigslistSearch(string jobName)
+        public ActionResult CraigslistSearch(string jobName, string jobLocation)
         {
-            List<CraigslistClass> model = CraigslistClass.RunSearch(jobName);
+            List<CraigslistClass> model = CraigslistClass.RunSearch(jobName, jobLocation);
             return View("Craigslist", model);
         }
 
