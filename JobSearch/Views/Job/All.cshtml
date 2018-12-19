@@ -62,20 +62,6 @@
     }
     </ul>
     <br>
-    <p class="jobOutput">CraigsList Results:</p>
-    <ul>
-    @if (@Model["craigslist"].Count != 0)
-    {
-      @foreach(CraigslistClass job in @Model["craigslist"])
-        {
-          <a class="exportLink" href="@job.GetUrl()"><p class="underlined underlined--gradient">@job.GetTitle()</p ></a>
-        }
-    }else
-    {
-      <p> </p>
-    }
-    </ul>
-    <br>
     <p class="jobOutput">Glassdoor Results:</p>
     <ul>
     @if (@Model["glassdoor"].Count != 0)
@@ -97,6 +83,20 @@
       @foreach(IndeedClass job in @Model["indeed"])
         {
           <a href="@job.GetUrl()"><p class="underlined underlined--gradient">@job.GetTitle()</p ></a>
+        }
+    }else
+    {
+      <p> </p>
+    }
+    </ul>
+    <br>
+    <p class="jobOutput">CraigsList Results:</p>
+    <ul>
+    @if (@Model["craigslist"].Count != 0)
+    {
+      @foreach(CraigslistClass job in @Model["craigslist"])
+        {
+          <a class="exportLink" href="@job.GetUrl()"><p class="underlined underlined--gradient">@job.GetTitle()</p ></a>
         }
     }else
     {
