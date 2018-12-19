@@ -46,11 +46,11 @@ namespace JobSearch.Models
 
             if (osName.Contains("windows"))
             {
-                driverLocation = "C:/Users/leila/Desktop/JobSearch.Solution/JobSearch/wwwroot/chromedriver.exe";
+                driverLocation = "..\\JobSearch\\wwwroot\\drivers";
             }
             else
             {
-                driverLocation = "/Users/Guest/Desktop/JobSearch.Solution/JobSearch/wwwroot/drivers";
+                driverLocation = "../JobSearch.Solution/JobSearch/wwwroot/drivers";
             }
 
             ChromeDriver driver = new ChromeDriver(driverLocation);
