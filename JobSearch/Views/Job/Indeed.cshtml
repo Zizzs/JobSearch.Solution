@@ -32,7 +32,7 @@
     @for(int i=0; i< @Model.Count; i++) 
     {
      
-        <a href="@Model[i].GetUrl()"><p class="underlined underlined--gradient"> <b>@Model[i].GetTitle()</b> <i>@Model[i].GetCompany()</i><small>@Model[i].GetLocation(), @Model[i].GetDate()</small></p> </a>
+        <a href="@Model[i].GetUrl()"><h4 class="underlined underlined--gradient"> <b>@Model[i].GetTitle()&nbsp;&nbsp;</b> <i>@Model[i].GetCompany()&nbsp;</i><small>@Model[i].GetLocation(), @Model[i].GetDate()</small></h4> </a>
        
       
     }

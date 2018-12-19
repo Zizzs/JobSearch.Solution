@@ -33,7 +33,7 @@
     {
       @foreach(GlassdoorClass job in @Model)
         {
-          <a href="@job.GetUrl()"><p class="underlined underlined--gradient">@job.GetTitle()  <span>@job.GetCompany()</span></p></a>
+          <a href="@job.GetUrl()"><h4 class="underlined underlined--gradient">@job.GetTitle() &nbsp;&nbsp; <i>@job.GetCompany()</i></h4></a>
         }
     } else
     {

@@ -33,7 +33,7 @@
     {
       @foreach(MonsterClass job in @Model)
         {
-          <a href="@job.GetUrl()"><p class="underlined underlined--gradient">@job.GetTitle() <i>@job.GetCompany()</i>, <small>@job.GetLocation(), @job.GetDate()</small> </p></a>
+          <a href="@job.GetUrl()"><h4 class="underlined underlined--gradient"><b>@job.GetTitle()&nbsp;&nbsp;</b> <i>@job.GetCompany()&nbsp;</i>, <small>@job.GetLocation(), @job.GetDate()</small> </h4></a>
         }
     } else
     {
