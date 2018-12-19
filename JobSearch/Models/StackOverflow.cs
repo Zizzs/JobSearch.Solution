@@ -39,7 +39,7 @@ namespace JobSearch.Models
         public static List<StackOverflow> RunSearch(string jobName, string jobLocation)
         {
 
-            ChromeDriver driver = new ChromeDriver("/Users/Guest/Desktop/JobSearch.Solution/JobSearch/wwwroot/drivers");
+            ChromeDriver driver = new ChromeDriver("C:/Users/leila/Desktop/JobSearch.Solution/JobSearch/wwwroot/chromedriver.exe");
 
             // Go to the home page
             //             IWebElement myDynamicElement =
