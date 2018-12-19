@@ -100,6 +100,7 @@ namespace JobSearch.Models
             searchForm.Submit();
 
             List<MonsterClass> monsterJobs = new List<MonsterClass> { };
+            IList<IWebElement> cards = driver.FindElements(By.ClassName("card-content"));
             string tempTitle = "";
             string tempLink = "";
             string tempCompany = "";
@@ -107,57 +108,94 @@ namespace JobSearch.Models
             string tempDate = "";
 
             Thread.Sleep(750);
-            // IReadOnlyCollection<IWebElement> anchors = driver.FindElements(By.ClassName("card-content "));
-            IWebElement number = driver.FindElement(By.XPath("//*[@id='ResultsScrollable']/div"));
-            int count = int.Parse(number.GetAttribute("data-results-total"));
-            if (count > 20)
+
+            bool existsElement(int i)
             {
-                count = 20;
+                try
+                {
+                    driver.FindElement(By.XPath("//*[@id='SearchResults']/section[" + i + "]/div/div[2]/div[1]/a"));
+                }
+                catch
+                {
+                    return false;
+                }
+                return true;
             }
-            Console.WriteLine(count);
-            for (int i = 1; i < count; i++)
+
+            try
             {
-                if (i == 3)
+                for (int i = 1; i < cards.Count - 1; i++)
                 {
-                    i = 4;
-                }
-                if (i == 10)
-                {
-                    i = 11;
-                }
-                else
-                {
-
-                    IWebElement single = driver.FindElement(By.XPath("//*/section[" + i + "]/div/div[2]/header/h2/a"));
-
-
-                    tempTitle = single.Text;
-                    tempLink = single.GetAttribute("href");
-
-                    IWebElement company = driver.FindElement(By.XPath("//*/section[" + i + "]/div/div[2]/div[1]/a"));
-                    tempCompany = company.Text;
-
-                    List<IWebElement> location = new List<IWebElement>();
-                    location.AddRange(driver.FindElements(By.XPath("//*/section[" + i + "]/div/div[2]/div[2]/a")));
-
-
-                    if (location.Count >= 1)
+                    if (existsElement(i))
                     {
-                        if (!string.IsNullOrEmpty(location[0].Text))
-                        {
-                            tempLocation = location[0].Text;
-                        }
-                        else if (string.IsNullOrEmpty(location[0].Text))
-                        {
-                            tempLocation = "Location not listed";
-                        }
+                        cards = driver.FindElements(By.ClassName("card-content"));
+                        IWebElement single = driver.FindElement(By.XPath("//*[@id='SearchResults']/section[" + i + "]/div/div[2]/header/h2/a"));
+                        tempTitle = single.Text;
+                        tempLink = single.GetAttribute("href");
 
+                        IWebElement company = driver.FindElement(By.XPath("//*[@id='SearchResults']/section[" + i + "]/div/div[2]/div[1]/a"));
+                        tempCompany = company.Text;
+
+                        List<IWebElement> location = new List<IWebElement>();
+                        location.AddRange(driver.FindElements(By.XPath("//*[@id='SearchResults']/section[" + i + "]/div/div[2]/div[2]/a")));
+
+
+                        if (location.Count >= 1)
+                        {
+                            if (!string.IsNullOrEmpty(location[0].Text))
+                            {
+                                tempLocation = location[0].Text;
+                            }
+                            else if (string.IsNullOrEmpty(location[0].Text))
+                            {
+                                tempLocation = "Location not listed";
+                            }
+
+                        }
+                        IWebElement date = driver.FindElement(By.XPath("//*[@id='SearchResults']/section[" + i + "]/div/div[3]/time"));
+                        tempDate = date.Text;
+                        MonsterClass tempjob = new MonsterClass(tempTitle, tempLink, tempCompany, tempLocation, tempDate);
+                        monsterJobs.Add(tempjob);
                     }
-                    IWebElement date = driver.FindElement(By.XPath("//*/section[" + i + "]/div/div[3]/time"));
-                    tempDate = date.Text;
-                    MonsterClass tempjob = new MonsterClass(tempTitle, tempLink, tempCompany, tempLocation, tempDate);
-                    monsterJobs.Add(tempjob);
                 }
+            }
+            catch
+            {
+                for (int i = 1; i < cards.Count - 1; i++)
+                {
+                    if (existsElement(i))
+                    {
+                        cards = driver.FindElements(By.ClassName("card-content"));
+                        IWebElement single = driver.FindElement(By.XPath("//*[@id='SearchResults']/section[" + i + "]/div/div[2]/header/h2/a"));
+                        tempTitle = single.Text;
+                        tempLink = single.GetAttribute("href");
+
+                        IWebElement company = driver.FindElement(By.XPath("//*[@id='SearchResults']/section[" + i + "]/div/div[2]/div[1]/a"));
+                        tempCompany = company.Text;
+
+                        List<IWebElement> location = new List<IWebElement>();
+                        location.AddRange(driver.FindElements(By.XPath("//*[@id='SearchResults']/section[" + i + "]/div/div[2]/div[2]/a")));
+
+
+                        if (location.Count >= 1)
+                        {
+                            if (!string.IsNullOrEmpty(location[0].Text))
+                            {
+                                tempLocation = location[0].Text;
+                            }
+                            else if (string.IsNullOrEmpty(location[0].Text))
+                            {
+                                tempLocation = "Location not listed";
+                            }
+
+                        }
+                        IWebElement date = driver.FindElement(By.XPath("//*/section[" + i + "]/div/div[3]/time"));
+                        tempDate = date.Text;
+                        MonsterClass tempjob = new MonsterClass(tempTitle, tempLink, tempCompany, tempLocation, tempDate);
+                        monsterJobs.Add(tempjob);
+                    }
+                }
+
             }
             return monsterJobs;
         }
