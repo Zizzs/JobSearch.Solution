@@ -31,11 +31,25 @@ namespace JobSearch.Models
         {
             return _url;
         }
-        // Initialize the Chrome Driver
         public static List<MonsterClass> RunSearch(string jobName, string jobLocation)
         {
+            // Check operating system
+            string driverLocation = "";
+            string osName = System.Runtime.InteropServices.RuntimeInformation.OSDescription.ToLower();
 
-            ChromeDriver driver = new ChromeDriver("/Users/Guest/Desktop/JobSearch.Solution/JobSearch/wwwroot/drivers");
+            Console.WriteLine(osName);
+
+            if (osName.Contains("windows"))
+            {
+                driverLocation = "..\\JobSearch\\wwwroot\\drivers-win";
+            }
+            else
+            {
+                driverLocation = "../JobSearch.Solution/JobSearch/wwwroot/drivers";
+            }
+            // Initialize the Chrome Driver
+
+            ChromeDriver driver = new ChromeDriver(driverLocation);
 
             // Go to the home page
             driver.Navigate().GoToUrl("https://www.monster.com/");
@@ -72,15 +86,15 @@ namespace JobSearch.Models
                 count = 25;
             }
             Console.WriteLine(count);
-            for(int i = 1; i < count; i++)
+            for (int i = 1; i < count; i++)
             {
-                if (i==3)
+                if (i == 3)
                 {
-                    i=4;
+                    i = 4;
                 }
                 else
                 {
-                    IWebElement single = driver.FindElement(By.XPath("//*/section["+i+"]/div/div[2]/header/h2/a"));
+                    IWebElement single = driver.FindElement(By.XPath("//*/section[" + i + "]/div/div[2]/header/h2/a"));
 
                     tempTitle = single.Text;
                     tempLink = single.GetAttribute("href");

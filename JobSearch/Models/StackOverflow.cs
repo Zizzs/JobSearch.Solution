@@ -35,10 +35,10 @@ namespace JobSearch.Models
         {
             return _company;
         }
-        // Initialize the Chrome Driver
+
         public static List<StackOverflow> RunSearch(string jobName, string jobLocation)
         {
-            // check operating system
+            // Check operating system
             string driverLocation = "";
             string osName = System.Runtime.InteropServices.RuntimeInformation.OSDescription.ToLower();
 
@@ -46,21 +46,18 @@ namespace JobSearch.Models
 
             if (osName.Contains("windows"))
             {
-                driverLocation = "..\\JobSearch\\wwwroot\\drivers";
+                driverLocation = "..\\JobSearch\\wwwroot\\drivers-win";
             }
             else
             {
                 driverLocation = "../JobSearch.Solution/JobSearch/wwwroot/drivers";
             }
+            // Initialize the Chrome Driver
 
             ChromeDriver driver = new ChromeDriver(driverLocation);
 
             // Go to the home page
-            //             IWebElement myDynamicElement =
-            // (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.id("usrUTils")));
 
-
-            // driver.Url("https://stackoverflow.com/jobs");
             driver.Navigate().GoToUrl("https://stackoverflow.com/jobs");
 
             // Get the page elements

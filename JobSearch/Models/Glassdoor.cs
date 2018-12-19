@@ -30,13 +30,26 @@ namespace JobSearch.Models
         {
             return _url;
         }
-        // Initialize the Chrome Driver
         public static List<GlassdoorClass> RunSearch(string jobName, string jobLocation)
         {
+            // Check operating system
+            string driverLocation = "";
+            string osName = System.Runtime.InteropServices.RuntimeInformation.OSDescription.ToLower();
 
-            ChromeDriver driver = new ChromeDriver("/Users/Guest/Desktop/JobSearch.Solution/JobSearch/wwwroot/drivers");
+            Console.WriteLine(osName);
 
-            
+            if (osName.Contains("windows"))
+            {
+                driverLocation = "..\\JobSearch\\wwwroot\\drivers-win";
+            }
+            else
+            {
+                driverLocation = "../JobSearch.Solution/JobSearch/wwwroot/drivers";
+            }
+            // Initialize the Chrome Driver
+
+            ChromeDriver driver = new ChromeDriver(driverLocation);
+
             // Go to the home page
             driver.Navigate().GoToUrl("https://www.glassdoor.com/index.htm");
             driver.Manage().Cookies.DeleteAllCookies();

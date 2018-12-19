@@ -46,11 +46,26 @@ namespace JobSearch.Models
             return _location;
         }
 
-        // Initialize the Chrome Driver
         public static List<IndeedClass> RunSearch(string jobName, string jobLocation)
         {
 
-            ChromeDriver driver = new ChromeDriver("/Users/Guest/Desktop/JobSearch.Solution/JobSearch/wwwroot/drivers");
+            // Check operating system
+            string driverLocation = "";
+            string osName = System.Runtime.InteropServices.RuntimeInformation.OSDescription.ToLower();
+
+            Console.WriteLine(osName);
+
+            if (osName.Contains("windows"))
+            {
+                driverLocation = "..\\JobSearch\\wwwroot\\drivers-win";
+            }
+            else
+            {
+                driverLocation = "../JobSearch.Solution/JobSearch/wwwroot/drivers";
+            }
+            // Initialize the Chrome Driver
+
+            ChromeDriver driver = new ChromeDriver(driverLocation);
 
             // Go to the home page
             driver.Navigate().GoToUrl("http://www.indeed.com");
