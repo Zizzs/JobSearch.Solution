@@ -1,6 +1,14 @@
 {
-  "ProjectFilePath": "c:\\Users\\leila\\Desktop\\JobSearch.Solution\\JobSearch.Tests\\JobSearch.Tests.csproj",
+  "ProjectFilePath": "/Users/Guest/Desktop/JobSearch.Solution/JobSearch.Tests/JobSearch.Tests.csproj",
   "TargetFramework": "netcoreapp1.1",
   "TagHelpers": [],
-  "Configuration": null
+  "Configuration": {
+    "ConfigurationName": "UnsupportedRazor",
+    "LanguageVersion": "1.0",
+    "Extensions": [
+      {
+        "ExtensionName": "UnsupportedRazorExtension"
+      }
+    ]
+  }
 }
