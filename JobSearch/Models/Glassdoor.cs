@@ -6,7 +6,7 @@ using System.IO;
 using System.Text;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-
+using System.Threading;
 
 namespace JobSearch.Models
 {
@@ -15,6 +15,7 @@ namespace JobSearch.Models
         private string _title;
         private string _url;
         private string _company;
+
         GlassdoorClass(string title, string url, string company)
         {
             _title = title;
@@ -36,6 +37,8 @@ namespace JobSearch.Models
         {
             return _company;
         }
+
+
         // Initialize the Chrome Driver
         public static List<GlassdoorClass> RunSearch(string jobName, string jobLocation)
         {
@@ -81,13 +84,21 @@ namespace JobSearch.Models
 
             // and click the login button
             searchForm.Submit();
+            Thread.Sleep(2000);
+            var drop = driver.FindElement(By.XPath("//*[@id='DKFilters']/div/div/div[2]"));
+            drop.Click();
+            var filter = driver.FindElement(By.XPath("//*[@id='DKFilters']/div/div/div[2]/ul/li[3]/span[1]"));
+            filter.Click();
 
             List<GlassdoorClass> glassdoorJobs = new List<GlassdoorClass> { };
             string tempTitle = "";
             string tempLink = "";
             string tempCompany = "";
 
+            Thread.Sleep(2000);
+
             IList<IWebElement> anchors = driver.FindElements(By.ClassName("jobLink"));
+
             for (int i = 1; i < 30; i++)
             {
                 IWebElement title = driver.FindElement(By.XPath("//*[@id='MainCol']/div/ul/li[" + i + "]/div[2]/div[1]/div[1]/a"));
