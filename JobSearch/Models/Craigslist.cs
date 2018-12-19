@@ -96,7 +96,7 @@ namespace JobSearch.Models
                 CraigslistClass tempjob = new CraigslistClass(tempTitle, tempLink, tempLocation, tempDate);
                 craigslistJobs.Add(tempjob);
             }
-
+            driver.Close();
             return craigslistJobs;
         }
     }

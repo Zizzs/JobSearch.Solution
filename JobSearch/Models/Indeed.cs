@@ -174,6 +174,7 @@ namespace JobSearch.Models
                     result.Add(indeedJobs[i]);
                 }
             }
+            driver.Close();
             return result;
         }
     }

@@ -159,6 +159,7 @@ namespace JobSearch.Models
                     monsterJobs.Add(tempjob);
                 }
             }
+            driver.Close();
             return monsterJobs;
         }
     }

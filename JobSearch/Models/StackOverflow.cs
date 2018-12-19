@@ -145,6 +145,7 @@ namespace JobSearch.Models
                     }
                 }
             }
+            driver.Close();
             return stackOverflowJobs;
         }
     }
