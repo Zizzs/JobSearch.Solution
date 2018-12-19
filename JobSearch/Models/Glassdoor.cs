@@ -44,14 +44,18 @@ namespace JobSearch.Models
 
 
             // Go to the home page
-            driver.Navigate().GoToUrl("https://www.glassdoor.com/index.htm");
+            driver.Navigate().GoToUrl("https://www.glassdoor.co.in/Jobs/Glassdoor-Jobs-E100431.htm");
             driver.Manage().Cookies.DeleteAllCookies();
             // Get the page elements
-            var searchForm = driver.FindElementById("KeywordSearch");
-            var locationForm = driver.FindElementById("LocationSearch");
+            var searchForm = driver.FindElementById("sc.keyword");
+            var locationForm = driver.FindElementById("sc.location");
 
 
-            // Type user name and password
+            searchForm.SendKeys("");
+            for (int i = 0; i < 20; i++)
+            {
+                searchForm.SendKeys(Keys.Backspace);
+            }
             searchForm.SendKeys(jobName);
             locationForm.SendKeys("");
             for (int i = 0; i < 20; i++)
