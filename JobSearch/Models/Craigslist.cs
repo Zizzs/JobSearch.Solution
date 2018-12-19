@@ -35,7 +35,7 @@ namespace JobSearch.Models
         {
 
             ChromeDriver driver = new ChromeDriver("/Users/Guest/Desktop/JobSearch.Solution/JobSearch/wwwroot/drivers");
-
+            
             // Go to the home page
             driver.Navigate().GoToUrl("https://seattle.craigslist.org/d/jobs/search/jjj");
 

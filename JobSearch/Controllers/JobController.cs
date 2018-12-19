@@ -19,9 +19,11 @@ namespace JobSearch.Controllers
             List<GlassdoorClass> glassdoor = new List<GlassdoorClass>();
             List<CraigslistClass> craigslist = new List<CraigslistClass>();
             List<MonsterClass> monster = new List<MonsterClass>();
+            List<StackOverflow> stackoverflow = new List<StackOverflow>();
             model.Add("glassdoor" , glassdoor);
             model.Add("craigslist" , craigslist);
             model.Add("monster" , monster);
+            model.Add("stackoverflow" , stackoverflow);
             return View(model);
         }
 
@@ -32,9 +34,11 @@ namespace JobSearch.Controllers
             List<GlassdoorClass> glassdoor = GlassdoorClass.RunSearch(jobName, jobLocation);
             List<CraigslistClass> craigslist = CraigslistClass.RunSearch(jobName);
             List<MonsterClass> monster = MonsterClass.RunSearch(jobName, jobLocation);
+            List<StackOverflow> stackoverflow = StackOverflow.RunSearch(jobName, jobLocation);
             model.Add("glassdoor" , glassdoor);
             model.Add("craigslist" , craigslist);
             model.Add("monster" , monster);
+            model.Add("stackoverflow" , stackoverflow);
             return View("All" , model);
         }
 
@@ -107,6 +111,20 @@ namespace JobSearch.Controllers
         {
             List<MonsterClass> model = MonsterClass.RunSearch(jobName, jobLocation);
             return View("Monster", model);
+        }
+
+        [HttpGet("/jobs/angellist")]
+        public ActionResult Angellist()
+        {
+            List<AngelListClass> model = new List<AngelListClass>();
+            return View(model);
+        }
+
+        [HttpPost("/jobs/angellist")]
+        public ActionResult AngellistSearch(string jobName, string jobLocation)
+        {
+            List<AngelListClass> model = AngelListClass.RunSearch(jobName, jobLocation);
+            return View("Angellist", model);
         }
 
     }
