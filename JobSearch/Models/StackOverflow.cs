@@ -38,8 +38,21 @@ namespace JobSearch.Models
         // Initialize the Chrome Driver
         public static List<StackOverflow> RunSearch(string jobName, string jobLocation)
         {
+            // check operating system
+            string osName = System.Runtime.InteropServices.RuntimeInformation.OSDescription.ToLower();
 
-            ChromeDriver driver = new ChromeDriver("C:/Users/leila/Desktop/JobSearch.Solution/JobSearch/wwwroot/chromedriver.exe");
+            Console.WriteLine(osName);
+
+            if (osName.Contains("win"))
+            {
+                System.Environment.SetEnvironmentVariable("webdriver.chrome.driver", "C:/Users/leila/Desktop/JobSearch.Solution/JobSearch/wwwroot/chromedriver.exe");
+            }
+            else
+            {
+                System.Environment.SetEnvironmentVariable("webdriver.chrome.driver", "/Users/Guest/Desktop/JobSearch.Solution/JobSearch/wwwroot/drivers/chromedriver");
+            }
+
+            ChromeDriver driver = new ChromeDriver();
 
             // Go to the home page
             //             IWebElement myDynamicElement =
