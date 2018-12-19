@@ -35,6 +35,19 @@
   <div class="formClass">
     <p>Output</p>
     <ul>
+    <h3>stackoverflow Jobs:</h3>
+    @if (@Model["stackoverflow"].Count != 0)
+    {
+      @foreach(StackOverflow job in @Model["stackoverflow"])
+        {
+          <a class="exportLink" href="@job.GetUrl()"><p class="exportLink">@job.GetTitle()</p ></a>
+        }
+    } else
+    {
+      <p> </p>
+    }
+    </ul>
+    <ul>
     <h3>Monster Jobs:</h3>
     @if (@Model["monster"].Count != 0)
     {
