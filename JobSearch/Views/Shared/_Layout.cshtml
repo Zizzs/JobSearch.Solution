@@ -4,17 +4,23 @@
     <meta charset="utf-8">
     <title>JobSearch</title>
     <link rel=stylesheet href=https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css>
-    <link rel="stylesheet" href="~/css/styles.css?v=1.10">
+    <link rel="stylesheet" href="~/css/styles.css?v=1.11">
+    <link href="https://fonts.googleapis.com/css?family=Acme|Archivo+Narrow" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="~/js/scripts.js"></script>
   </head>
   <body>
     <div class="container">
+    <br>
       <ul class="nav nav-tabs nav-justified">
         <li><a class="nav-link" href = "/">Home</a></li>
         <li><a class="nav-link" href = "/jobs/">Job Search</a></li>
       </ul>
     </div>
     @RenderBody()
+    <div class="footer">
+      <div id="footerLeft">Job Hunter</div>
+      <div id="footerRight">Copyright MIT License - Alex Williams, Manasa Vesala, Leilani Leech, and James Cho</div>
+    </div>
   </body>
 </html>

@@ -12,6 +12,8 @@
 
 body {
     background-color: #F7F9FB;
+    font-family: 'Archivo Narrow', sans-serif;
+    font-size: 17px;
 }
 
 .formClass {
@@ -20,6 +22,7 @@ body {
     border-radius: 5px;
     margin-top: 15px;
     padding: 30px;
+    margin-bottom: 100px;
 }
 
 #formLeft {
@@ -79,8 +82,8 @@ HTML SCSS Result EDIT ON body {
   .underlined {
     color: black;
     flex: 1;
-    font-size: 14px;
-    line-height: 1.2;
+    font-size: 16px;
+    line-height: 1.7;
     text-decoration: none;
     background-image: linear-gradient(to right, #e3ad8f 0, #e3ad8f 100%);
     background-position: 0 1.2em;
@@ -90,29 +93,12 @@ HTML SCSS Result EDIT ON body {
   }
   .underlined:hover {
     background-size: 100% 100%;
-  }
-  .underlined--thin {
-    background-image: linear-gradient(to right, black 0, black 100%);
-  }
-  .underlined--thick {
-    background-position: 0 -0.1em;
-  }
-  .underlined--offset {
-    background-position: 0 0.2em;
-    box-shadow: inset 0 -0.5em 0 0 white;
+    color: #F7F9FB;
   }
   .underlined--gradient {
     background-position: 0 -0.1em;
-    background-image: linear-gradient(to right, #e3ad8f 0, #ca8fe3 50%, #8FC1E3 100%);
+    background-image: linear-gradient(to right, #e4621c 0, #e3ad8f 30%, #8FC1E3 80%);
   }
-  .underlined--reverse {
-    background-position: 100% -0.1em;
-    transition: background 1s;
-    background-image: linear-gradient(to right, yellow 0, yellow 100%);
-  }
-
-
-@import 'https://fonts.googleapis.com/css?family=Rubik+Mono+One';
 
 .words {
   color: #F7F9FB;
@@ -120,7 +106,7 @@ HTML SCSS Result EDIT ON body {
   line-height: 1;
 }
 .words span {
-  font-size: 120px;
+  font-size: 175px;
   display: inline-block;
   animation: move 3.5s ease-in-out infinite;
 }
@@ -144,7 +130,7 @@ HTML SCSS Result EDIT ON body {
     transform: translate(-33%, 0);
   }
   50% {
-    text-shadow: 0 15px 40px #31708E;
+    text-shadow: 5px 15px 20px rgb(26, 65, 83);
   }
   100% {
     transform: translate(33%, 0);
@@ -159,7 +145,6 @@ HTML SCSS Result EDIT ON body {
   border: 5px solid #31708E;
   color: #31708E;
   padding: 20px;
-  font-family: monaco, courier, mono-space;
   line-height: 2;
   box-shadow: 5px 5px 0 #31708E;
 }
@@ -172,11 +157,14 @@ HTML SCSS Result EDIT ON body {
 }
 
 #frontDivOne {
-    margin-left: 35%;
+    margin-top: 25%;
+    margin-left: 40%;
+    font-family: 'Acme', sans-serif;
 }
 
 #frontDivTwo {
     margin-left: 25%;
+    font-family: 'Acme', sans-serif;
 }
 
 #glassdoorLogo {
@@ -189,4 +177,43 @@ HTML SCSS Result EDIT ON body {
 
 #monsterLogo {
     margin-top: 15px;
+}
+
+.footer {
+    display: inline-grid;
+    grid-template-columns: 1fr 1fr;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+    background-color: #31708E;
+    color: white;
+    text-align: left;
+    padding: 10px;
+    padding-top:15px;
+    border-radius: 5px;
+}
+
+#footerRight {
+    text-align: right;
+}
+
+#infoDiv {
+    background-color: #8FC1E3;
+    border-radius: 15px;
+    padding: 30px;
+    width: auto;
+    text-align: center;
+    height: 100px;
+    font-size: 25px;
+}
+
+.jobOutput {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+#jobHunterLogo {
+    margin-left: 5%;
 }
