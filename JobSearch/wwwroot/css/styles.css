@@ -233,11 +233,6 @@ input[type=text]:focus {
 
 /* Collapsible button styling for Indeed*/
 
-.loading{
-    display: hidden;
-}
-
-
 ul.indeed{
     margin-bottom: 20px;
 }
@@ -255,13 +250,14 @@ h4.details{
     border-radius: 6.25rem;
     background-color: #085ff7;
     cursor: pointer;
-    padding: 12px;
-    margin-bottom: 10px;
-    padding-bottom: 35px;
+    padding: 8px;
+    margin-bottom: 15px;
+    padding-bottom: 30px;
     text-align: center;
     outline: none;
-    font-size: 15px;
+    font-size: 13px;
     height: 10px;
+    width: 80px;
   }
   
   .active, .collapsible:hover {
