@@ -5,11 +5,11 @@
 <div class="container">
   <ul class="nav nav-tabs nav-justified">
     <li><a class="nav-link" href = "/jobs/all">All</a></li>
-    <li><a class="nav-link" href = "/jobs/stackoverflow">Stack OverFlow</a></li>
-    <li><a class="nav-link" href = "/jobs/indeed">Indeed</a></li>
-    <li><a class="nav-link" href = "/jobs/glassdoor">GlassDoor</a></li>
-    <li><a class="nav-link" href = "/jobs/craigslist">Craigslist</a></li>
-    <li><a class="nav-link" href = "/jobs/monster">Monster</a></li>
+    <li><a class="nav-link" href = "/jobs/stackoverflow"><img class="logoAll" src="~/img/stackoverflow.png"></a></li>
+    <li><a class="nav-link" href = "/jobs/indeed"><img class="logoAll" src="~/img/indeed.png"></a></li>
+    <li><a class="nav-link" href = "/jobs/glassdoor"><img class="logoAll" src="~/img/glassdoor.png"></a></li>
+    <li><a class="nav-link" href = "/jobs/craigslist"><img class="logoAll" src="~/img/craigslist.png"></a></li>
+    <li><a class="nav-link" href = "/jobs/monster"><img class="logoAll" src="~/img/monsterlogo.png"></a></li>
   </ul>
 </div>
 <br>
@@ -28,13 +28,21 @@
   </div>
   <div class="formClass">
     <p class="jobOutput">Indeed Results:</p>
-    <ul>
-    @for(int i=0; i< @Model.Count; i++) 
+    <ul class= "indeed">
+
+ 
+   @if(@Model.Count >0)
     {
-     
-        <a target="_blank" href="@Model[i].GetUrl()"><h4 class="underlined underlined--gradient"> <b>@Model[i].GetTitle()&nbsp;&nbsp;</b> <i>@Model[i].GetCompany()&nbsp;</i><small>@Model[i].GetLocation(), @Model[i].GetDate()</small></h4> </a>
-       
-      
+      @for(int i=0; i< @Model.Count; i++) 
+      {  
+          <a target="_blank" class="exportLink"  href="@Model[i].GetUrl()"><h4 class="underlined underlined--gradient"> <b>@Model[i].GetTitle()&nbsp;&nbsp;</b> <i>@Model[i].GetCompany()&nbsp;</i><small>@Model[i].GetLocation(), @Model[i].GetDate()</small></h4> </a> 
+      <button class="collapsible btn btn-sm">Details</button>
+        <div class="content">
+        <h4 class="details">@Model[i].GetTitle()&nbsp; (@Model[i].GetCompany())</h4>
+          <p>@Model[i].GetDescription()</p>
+        </div>
+      }
+    
     }
     </ul>
   </div>
