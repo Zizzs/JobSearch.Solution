@@ -83,7 +83,7 @@ HTML SCSS Result EDIT ON body {
     color: black;
     flex: 1;
     font-size: 16px;
-    line-height: 1.7;
+    line-height: 2;
     text-decoration: none;
     background-image: linear-gradient(to right, #e3ad8f 0, #e3ad8f 100%);
     background-position: 0 1.2em;
@@ -99,6 +99,8 @@ HTML SCSS Result EDIT ON body {
     background-position: 0 -0.1em;
     background-image: linear-gradient(to right, #e4621c 0, #e3ad8f 30%, #8FC1E3 80%);
   }
+
+  
 
 .words {
   color: #F7F9FB;
@@ -217,3 +219,42 @@ HTML SCSS Result EDIT ON body {
 #jobHunterLogo {
     margin-left: 5%;
 }
+
+
+
+/* Collapsible button styling for Indeed*/
+ul.indeed{
+    margin-bottom: 20px;
+}
+
+h4.content{
+    font-weight: bold;
+}
+
+.collapsible {
+    color: white;
+    display:table-cell;
+    align-content: space-around;
+    vertical-align: middle;
+    border: .125rem solid #085ff7;
+    border-radius: 6.25rem;
+    background-color: #085ff7;
+    cursor: pointer;
+    padding: 12px;
+    padding-bottom: 35px;
+    text-align: center;
+    outline: none;
+    font-size: 15px;
+    height: 10px;
+  }
+  
+  .active, .collapsible:hover {
+    background-color: #555;
+  }
+  
+  .content {
+    padding: 0 18px;
+    display: none;
+    overflow: hidden;
+    background-color: #f1f1f1;
+  }
