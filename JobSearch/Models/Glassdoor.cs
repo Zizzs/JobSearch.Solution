@@ -59,7 +59,18 @@ namespace JobSearch.Models
             // Initialize the Chrome Driver
 
             ChromeDriver driver = new ChromeDriver(driverLocation);
-
+            bool existsElement(string path)
+            {
+                try
+                {
+                    driver.FindElementByXPath(path);
+                }
+                catch
+                {
+                    return false;
+                }
+                return true;
+            }
 
             // Go to the home page
             driver.Navigate().GoToUrl("https://www.glassdoor.co.in/Jobs/Glassdoor-Jobs-E100431.htm");
@@ -85,60 +96,68 @@ namespace JobSearch.Models
             // and click the login button
             searchForm.Submit();
             Thread.Sleep(2000);
-            var drop = driver.FindElement(By.XPath("//*[@id='DKFilters']/div/div/div[2]"));
-            drop.Click();
-            var filter = driver.FindElement(By.XPath("//*[@id='DKFilters']/div/div/div[2]/ul/li[3]/span[1]"));
-            filter.Click();
-
             List<GlassdoorClass> glassdoorJobs = new List<GlassdoorClass> { };
             string tempTitle = "";
             string tempLink = "";
             string tempCompany = "";
-            bool existsElement(string path)
+
+            if (existsElement("//*[@id='DKFilters']/div/div/div[2]"))
             {
-                try
-                {
-                    driver.FindElementByXPath(path);
-                }
-                catch
-                {
-                    return false;
-                }
-                return true;
+                var drop = driver.FindElement(By.XPath("//*[@id='DKFilters']/div/div/div[2]"));
+                drop.Click();
             }
+            if ((existsElement("//*[@id='DKFilters']/div/div/div[2]/ul/li[3]/span[1]")))
+            {
+                var filter = driver.FindElement(By.XPath("//*[@id='DKFilters']/div/div/div[2]/ul/li[3]/span[1]"));
+                filter.Click();
+            }
+            else
+            {
+                GlassdoorClass tempjob = new GlassdoorClass("Sorry, an error occurred. Please try a different search.", tempLink, tempCompany);
+                glassdoorJobs.Add(tempjob);
+                return glassdoorJobs;
+            }
+
 
             Thread.Sleep(2000);
 
             IList<IWebElement> anchors = driver.FindElements(By.ClassName("jobLink"));
-
-            for (int i = 1; i < 30; i++)
+            try
             {
-                if (existsElement("//*[@id='MainCol']/div/ul/li[" + i + "]/div[2]/div[1]/div[1]/a"))
+                for (int i = 1; i < 30; i++)
                 {
-                    IWebElement title = driver.FindElement(By.XPath("//*[@id='MainCol']/div/ul/li[" + i + "]/div[2]/div[1]/div[1]/a"));
-                    tempTitle = title.Text;
-                    tempLink = title.GetAttribute("href");
-                }
-                else
-                {
-                    tempTitle = "None";
-                }
+                    if (existsElement("//*[@id='MainCol']/div/ul/li[" + i + "]/div[2]/div[1]/div[1]/a"))
+                    {
+                        IWebElement title = driver.FindElement(By.XPath("//*[@id='MainCol']/div/ul/li[" + i + "]/div[2]/div[1]/div[1]/a"));
+                        tempTitle = title.Text;
+                        tempLink = title.GetAttribute("href");
+                    }
+                    else
+                    {
+                        tempTitle = "None";
+                    }
 
-                if (existsElement("//*[@id='MainCol']/div/ul/li[" + i + "]/div[2]/div[2]/div"))
-                {
-                    IWebElement company = driver.FindElement(By.XPath("//*[@id='MainCol']/div/ul/li[" + i + "]/div[2]/div[2]/div"));
-                    tempCompany = company.Text;
-                }
-                else
-                {
-                    tempCompany = "Unknown Company";
-                }
+                    if (existsElement("//*[@id='MainCol']/div/ul/li[" + i + "]/div[2]/div[2]/div"))
+                    {
+                        IWebElement company = driver.FindElement(By.XPath("//*[@id='MainCol']/div/ul/li[" + i + "]/div[2]/div[2]/div"));
+                        tempCompany = company.Text;
+                    }
+                    else
+                    {
+                        tempCompany = "Unknown Company";
+                    }
 
-                GlassdoorClass tempjob = new GlassdoorClass(tempTitle, tempLink, tempCompany);
-                glassdoorJobs.Add(tempjob);
+                    GlassdoorClass tempjob = new GlassdoorClass(tempTitle, tempLink, tempCompany);
+                    glassdoorJobs.Add(tempjob);
+                }
+                driver.Close();
+                return glassdoorJobs;
             }
-            driver.Close();
-            return glassdoorJobs;
+            catch
+            {
+                driver.Close();
+                return glassdoorJobs;
+            }
         }
     }
 }
