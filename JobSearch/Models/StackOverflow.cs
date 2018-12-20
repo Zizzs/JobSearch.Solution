@@ -96,7 +96,7 @@ namespace JobSearch.Models
                 try
                 {
                     driver.FindElementByXPath("//*[@id='mainbar']/div[2]/div/div[" + i + "]/div[3]/div[1]/h2/a");
-                } //*[@id="mainbar"]/div[2]/div/div[1]/div[3]/div[1]/h2/a
+                }
                 catch
                 {
                     return false;
@@ -141,11 +141,6 @@ namespace JobSearch.Models
                         tempDate = date.Text;
 
                         StackOverflow tempJob = new StackOverflow(tempTitle, tempLink, tempCompany, tempLocation, tempDate);
-                        stackOverflowJobs.Add(tempJob);
-                    }
-                    else
-                    {
-                        StackOverflow tempJob = new StackOverflow("Sorry, an error occurred. Please try a different search.", "", "", "", "");
                         stackOverflowJobs.Add(tempJob);
                     }
                 }
