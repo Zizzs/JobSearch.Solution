@@ -33,7 +33,7 @@
     {
       @foreach(StackOverflow job in @Model)
         {
-          <a  target="_blank" href="@job.GetUrl()"><h4 class="underlined underlined--gradient"> <b>@job.GetTitle()&nbsp;&nbsp;</b>
+          <a  target="_blank"  class="exportLink" href="@job.GetUrl()"><h4 class="underlined underlined--gradient"> <b>@job.GetTitle()&nbsp;&nbsp;</b>
          <i>@job.GetCompany()&nbsp;</i>, <small>@job.GetLocation(), @job.GetDate() </small></h4></a>
         }
     }

@@ -82,7 +82,7 @@
     {
       @foreach(IndeedClass job in @Model["indeed"])
         {
-          <a target="_blank" href="@job.GetUrl()"><p class="underlined underlined--gradient">@job.GetTitle()</p ></a>
+          <a target="_blank" class="exportLink" href="@job.GetUrl()"><p class="underlined underlined--gradient">@job.GetTitle()</p ></a>
         }
     }else
     {
@@ -96,7 +96,7 @@
     {
       @foreach(CraigslistClass job in @Model["craigslist"])
         {
-          <a class="exportLink" href="@job.GetUrl()"><p class="underlined underlined--gradient">@job.GetTitle()</p ></a>
+          <a class="exportLink"  class="exportLink" href="@job.GetUrl()"><p class="underlined underlined--gradient">@job.GetTitle()</p ></a>
         }
     }else
     {

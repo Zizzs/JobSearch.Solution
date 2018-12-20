@@ -17,7 +17,7 @@
 <br>
 <div class="wrapper">
   <div id="formLeft" class="formClass">
-    <p>Search Cragslist By Job TItle and Job Location</p>
+    <p id="testText">Search Cragslist By Job TItle and Job Location</p>
     <form action = "/jobs/craigslist" method="post">
             <label for='jobName'>Job Title</label>
             <input class='jobName' name='jobName' type='text' required>
@@ -33,7 +33,7 @@
     {
       @foreach(CraigslistClass job in @Model)
         {
-          <a target="_blank" href="@job.GetUrl()"><h4 class="underlined underlined--gradient"><b>@job.GetTitle()&nbsp;&nbsp;</b> <small>@job.GetLocation(), @job.GetDate()</small></h4></a>
+          <a target="_blank" class="exportLink"  href="@job.GetUrl()"><h4 class="underlined underlined--gradient"><b>@job.GetTitle()&nbsp;&nbsp;</b> <small>@job.GetLocation(), @job.GetDate()</small></h4></a>
         }
     } else
     {
