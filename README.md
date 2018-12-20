@@ -43,6 +43,8 @@ _Leilani Leach: leilanileach@yahoo.com_
 
 _Manasa Vesala: vesalamanasa@gmail.com_
 
+_James Cho: hwisoocho@gmail.com_
+
 _Alex Williams: Zizzs17@gmail.com_
 
 ### License
