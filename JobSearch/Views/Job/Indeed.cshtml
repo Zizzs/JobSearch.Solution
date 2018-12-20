@@ -29,14 +29,20 @@
   <div class="formClass">
     <p class="jobOutput">Indeed Results:</p>
     <ul class= "indeed">
-    @for(int i=0; i< @Model.Count; i++) 
-    {  
-        <a target="_blank" class="exportLink"  href="@Model[i].GetUrl()"><h4 class="underlined underlined--gradient"> <b>@Model[i].GetTitle()&nbsp;&nbsp;</b> <i>@Model[i].GetCompany()&nbsp;</i><small>@Model[i].GetLocation(), @Model[i].GetDate()</small></h4> </a> 
-     <button class="collapsible btn btn-sm">Details</button>
-      <div class="content">
-      <h4 class="content">@Model[i].GetTitle()&nbsp; (@Model[i].GetCompany())</h4>
-        <p>@Model[i].GetDescription()</p>
-      </div>
+
+ 
+   @if(@Model.Count >0)
+    {
+      @for(int i=0; i< @Model.Count; i++) 
+      {  
+          <a target="_blank" class="exportLink"  href="@Model[i].GetUrl()"><h4 class="underlined underlined--gradient"> <b>@Model[i].GetTitle()&nbsp;&nbsp;</b> <i>@Model[i].GetCompany()&nbsp;</i><small>@Model[i].GetLocation(), @Model[i].GetDate()</small></h4> </a> 
+      <button class="collapsible btn btn-sm">Details</button>
+        <div class="content">
+        <h4 class="details">@Model[i].GetTitle()&nbsp; (@Model[i].GetCompany())</h4>
+          <p>@Model[i].GetDescription()</p>
+        </div>
+      }
+    
     }
     </ul>
   </div>

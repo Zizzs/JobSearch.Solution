@@ -227,11 +227,17 @@ HTML SCSS Result EDIT ON body {
 
 
 /* Collapsible button styling for Indeed*/
+
+.loading{
+    display: hidden;
+}
+
+
 ul.indeed{
     margin-bottom: 20px;
 }
 
-h4.content{
+h4.details{
     font-weight: bold;
 }
 
@@ -245,6 +251,7 @@ h4.content{
     background-color: #085ff7;
     cursor: pointer;
     padding: 12px;
+    margin-bottom: 10px;
     padding-bottom: 35px;
     text-align: center;
     outline: none;
