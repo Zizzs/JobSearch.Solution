@@ -62,42 +62,53 @@ namespace JobSearch.Models
             {
                 driverLocation = "../JobSearch/wwwroot/drivers";
             }
-            // Initialize the Chrome Driver
-
-            ChromeDriver driver = new ChromeDriver(driverLocation);
-
-            // Go to the home page
-            driver.Navigate().GoToUrl("https://" + jobLocation + ".craigslist.org/d/jobs/search/jjj");
-
-            // Get the page elements
-            var searchForm = driver.FindElementById("query");
-
-            // Type user name and password
-            searchForm.SendKeys(jobName);
-
-            searchForm.Submit();
-
             List<CraigslistClass> craigslistJobs = new List<CraigslistClass> { };
             string tempTitle = "";
             string tempLink = "";
             string tempLocation = "";
             string tempDate = "";
+            // Initialize the Chrome Driver
+            ChromeDriver driver = new ChromeDriver(driverLocation);
 
-            IList<IWebElement> anchors = driver.FindElements(By.ClassName("hdrlnk"));
-            for (int i = 1; i < anchors.Count; i++)
+            try
             {
-                tempTitle = anchors[i].Text;
-                tempLink = anchors[i].GetAttribute("href");
-                IWebElement location = driver.FindElement(By.XPath("//*[@id='sortable-results']/ul/li[" + i + "]/p/span[2]/span[1]"));
-                tempLocation = location.Text;
-                IWebElement date = driver.FindElement(By.XPath("//*[@id='sortable-results']/ul/li[" + i + "]/p/time"));
-                tempDate = date.Text;
+                // Go to the home page
+                driver.Navigate().GoToUrl("https://" + jobLocation + ".craigslist.org/d/jobs/search/jjj");
 
-                CraigslistClass tempjob = new CraigslistClass(tempTitle, tempLink, tempLocation, tempDate);
-                craigslistJobs.Add(tempjob);
+                // Get the page elements
+                var searchForm = driver.FindElementById("query");
+
+                // Type user name and password
+                searchForm.SendKeys(jobName);
+
+                searchForm.Submit();
+
+
+
+
+                IList<IWebElement> anchors = driver.FindElements(By.ClassName("hdrlnk"));
+                for (int i = 1; i < anchors.Count; i++)
+                {
+                    tempTitle = anchors[i].Text;
+                    tempLink = anchors[i].GetAttribute("href");
+                    IWebElement location = driver.FindElement(By.XPath("//*[@id='sortable-results']/ul/li[" + i + "]/p/span[2]/span[1]"));
+                    tempLocation = location.Text;
+                    IWebElement date = driver.FindElement(By.XPath("//*[@id='sortable-results']/ul/li[" + i + "]/p/time"));
+                    tempDate = date.Text;
+
+                    CraigslistClass tempjob = new CraigslistClass(tempTitle, tempLink, tempLocation, tempDate);
+                    craigslistJobs.Add(tempjob);
+                }
+                driver.Close();
+                return craigslistJobs;
             }
-            driver.Close();
-            return craigslistJobs;
+            catch
+            {
+                CraigslistClass tempjob = new CraigslistClass("Oops, try again! Make sure you're entering a city, not a state or country", "We encountered an error", "", "");
+                craigslistJobs.Add(tempjob);
+                driver.Close();
+                return craigslistJobs;
+            }
         }
     }
 }
