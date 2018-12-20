@@ -221,3 +221,9 @@ HTML SCSS Result EDIT ON body {
 #jobHunterLogo {
     margin-left: 5%;
 }
+
+input[type=text]:focus {
+    border: 3px solid #F7F9FB;
+    background-color: #31708E;
+    color: #F7F9FB;
+}
