@@ -87,16 +87,24 @@ namespace JobSearch.Models
 
 
                 IList<IWebElement> anchors = driver.FindElements(By.ClassName("hdrlnk"));
-                for (int i = 1; i < anchors.Count; i++)
+                if (anchors.Count > 0)
                 {
-                    tempTitle = anchors[i].Text;
-                    tempLink = anchors[i].GetAttribute("href");
-                    IWebElement location = driver.FindElement(By.XPath("//*[@id='sortable-results']/ul/li[" + i + "]/p/span[2]/span[1]"));
-                    tempLocation = location.Text;
-                    IWebElement date = driver.FindElement(By.XPath("//*[@id='sortable-results']/ul/li[" + i + "]/p/time"));
-                    tempDate = date.Text;
+                    for (int i = 1; i < anchors.Count; i++)
+                    {
+                        tempTitle = anchors[i].Text;
+                        tempLink = anchors[i].GetAttribute("href");
+                        IWebElement location = driver.FindElement(By.XPath("//*[@id='sortable-results']/ul/li[" + i + "]/p/span[2]/span[1]"));
+                        tempLocation = location.Text;
+                        IWebElement date = driver.FindElement(By.XPath("//*[@id='sortable-results']/ul/li[" + i + "]/p/time"));
+                        tempDate = date.Text;
 
-                    CraigslistClass tempjob = new CraigslistClass(tempTitle, tempLink, tempLocation, tempDate);
+                        CraigslistClass tempjob = new CraigslistClass(tempTitle, tempLink, tempLocation, tempDate);
+                        craigslistJobs.Add(tempjob);
+                    }
+                }
+                else
+                {
+                    CraigslistClass tempjob = new CraigslistClass("Sorry, there are no results. Please try a different search.", "", "", "");
                     craigslistJobs.Add(tempjob);
                 }
                 driver.Close();
@@ -104,7 +112,7 @@ namespace JobSearch.Models
             }
             catch
             {
-                CraigslistClass tempjob = new CraigslistClass("Oops, try again! Make sure you're entering a city, not a state or country", "We encountered an error", "", "");
+                CraigslistClass tempjob = new CraigslistClass("Oops, try again! Make sure you're entering a city, not a state or country", "", "", "");
                 craigslistJobs.Add(tempjob);
                 driver.Close();
                 return craigslistJobs;

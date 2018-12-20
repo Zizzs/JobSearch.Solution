@@ -188,6 +188,13 @@ namespace JobSearch.Models
                     result.Add(indeedJobs[i]);
                 }
             }
+            if (indeedJobs.Count == 0)
+            {
+                IndeedClass tempJob = new IndeedClass("Sorry, there are no results. Please try a different search.", tempLink, tempCompany, tempLocation, tempDate, tempDescription);
+                indeedJobs.Add(tempJob);
+                driver.Close();
+                return indeedJobs;
+            }
             driver.Close();
             return result;
         }
