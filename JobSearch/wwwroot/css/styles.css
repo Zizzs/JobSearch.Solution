@@ -224,13 +224,6 @@ HTML SCSS Result EDIT ON body {
     margin-left: 5%;
 }
 
-<<<<<<< HEAD
-input[type=text]:focus {
-    border: 3px solid #F7F9FB;
-    background-color: #31708E;
-    color: #F7F9FB;
-}
-=======
 
 
 /* Collapsible button styling for Indeed*/
@@ -276,4 +269,3 @@ h4.details{
     overflow: hidden;
     background-color: #f1f1f1;
   }
->>>>>>> a6027ad9888d6ee4bebbe23ddd01e497d89bf08f

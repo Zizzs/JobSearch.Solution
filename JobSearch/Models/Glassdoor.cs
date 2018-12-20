@@ -94,6 +94,18 @@ namespace JobSearch.Models
             string tempTitle = "";
             string tempLink = "";
             string tempCompany = "";
+            bool existsElement(string path)
+            {
+                try
+                {
+                    driver.FindElementByXPath(path);
+                }
+                catch
+                {
+                    return false;
+                }
+                return true;
+            }
 
             Thread.Sleep(2000);
 
@@ -101,12 +113,26 @@ namespace JobSearch.Models
 
             for (int i = 1; i < 30; i++)
             {
-                IWebElement title = driver.FindElement(By.XPath("//*[@id='MainCol']/div/ul/li[" + i + "]/div[2]/div[1]/div[1]/a"));
-                tempTitle = title.Text;
-                tempLink = title.GetAttribute("href");
+                if (existsElement("//*[@id='MainCol']/div/ul/li[" + i + "]/div[2]/div[1]/div[1]/a"))
+                {
+                    IWebElement title = driver.FindElement(By.XPath("//*[@id='MainCol']/div/ul/li[" + i + "]/div[2]/div[1]/div[1]/a"));
+                    tempTitle = title.Text;
+                    tempLink = title.GetAttribute("href");
+                }
+                else
+                {
+                    tempTitle = "None";
+                }
 
-                IWebElement company = driver.FindElement(By.XPath("//*[@id='MainCol']/div/ul/li[" + i + "]/div[2]/div[2]/div"));
-                tempCompany = company.Text;
+                if (existsElement("//*[@id='MainCol']/div/ul/li[" + i + "]/div[2]/div[2]/div"))
+                {
+                    IWebElement company = driver.FindElement(By.XPath("//*[@id='MainCol']/div/ul/li[" + i + "]/div[2]/div[2]/div"));
+                    tempCompany = company.Text;
+                }
+                else
+                {
+                    tempCompany = "Unknown Company";
+                }
 
                 GlassdoorClass tempjob = new GlassdoorClass(tempTitle, tempLink, tempCompany);
                 glassdoorJobs.Add(tempjob);
