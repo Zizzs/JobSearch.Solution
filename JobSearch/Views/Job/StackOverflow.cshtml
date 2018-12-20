@@ -5,11 +5,11 @@
 <div class="container">
   <ul class="nav nav-tabs nav-justified">
     <li><a class="nav-link" href = "/jobs/all">All</a></li>
-    <li><a class="nav-link" href = "/jobs/stackoverflow">Stack OverFlow</a></li>
-    <li><a class="nav-link" href = "/jobs/indeed">Indeed</a></li>
-    <li><a class="nav-link" href = "/jobs/glassdoor">GlassDoor</a></li>
-    <li><a class="nav-link" href = "/jobs/craigslist">Craigslist</a></li>
-    <li><a class="nav-link" href = "/jobs/monster">Monster</a></li>
+    <li><a class="nav-link" href = "/jobs/stackoverflow"><img class="logoAll" src="~/img/stackoverflow.png"></a></li>
+    <li><a class="nav-link" href = "/jobs/indeed"><img class="logoAll" src="~/img/indeed.png"></a></li>
+    <li><a class="nav-link" href = "/jobs/glassdoor"><img class="logoAll" src="~/img/glassdoor.png"></a></li>
+    <li><a class="nav-link" href = "/jobs/craigslist"><img class="logoAll" src="~/img/craigslist.png"></a></li>
+    <li><a class="nav-link" href = "/jobs/monster"><img class="logoAll" src="~/img/monsterlogo.png"></a></li>
   </ul>
 </div>
 <br>
@@ -33,7 +33,7 @@
     {
       @foreach(StackOverflow job in @Model)
         {
-          <a  target="_blank" href="@job.GetUrl()"><h4 class="underlined underlined--gradient"> <b>@job.GetTitle()&nbsp;&nbsp;</b>
+          <a  target="_blank"  class="exportLink" href="@job.GetUrl()"><h4 class="underlined underlined--gradient"> <b>@job.GetTitle()&nbsp;&nbsp;</b>
          <i>@job.GetCompany()&nbsp;</i>, <small>@job.GetLocation(), @job.GetDate() </small></h4></a>
         }
     }

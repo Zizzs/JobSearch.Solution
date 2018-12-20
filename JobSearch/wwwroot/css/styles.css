@@ -33,10 +33,13 @@ body {
 .nav-tabs{
     background-color: #8FC1E3;
     border-radius: 10px;
+    border-left: #F7F9FB;
+    border-right: #F7F9FB;
 }
 .nav-tabs > li > a:hover {
     background-color: #5085A5;
     border-radius: 10px;
+    border: #F7F9FB solid 2px;
 }
 a:link {
     color: #31708E;
@@ -83,7 +86,7 @@ HTML SCSS Result EDIT ON body {
     color: black;
     flex: 1;
     font-size: 16px;
-    line-height: 1.7;
+    line-height: 2;
     text-decoration: none;
     background-image: linear-gradient(to right, #e3ad8f 0, #e3ad8f 100%);
     background-position: 0 1.2em;
@@ -99,6 +102,9 @@ HTML SCSS Result EDIT ON body {
     background-position: 0 -0.1em;
     background-image: linear-gradient(to right, #e4621c 0, #e3ad8f 30%, #8FC1E3 80%);
   }
+  
+
+  
 
 .words {
   color: #F7F9FB;
@@ -217,3 +223,57 @@ HTML SCSS Result EDIT ON body {
 #jobHunterLogo {
     margin-left: 5%;
 }
+
+<<<<<<< HEAD
+input[type=text]:focus {
+    border: 3px solid #F7F9FB;
+    background-color: #31708E;
+    color: #F7F9FB;
+}
+=======
+
+
+/* Collapsible button styling for Indeed*/
+
+.loading{
+    display: hidden;
+}
+
+
+ul.indeed{
+    margin-bottom: 20px;
+}
+
+h4.details{
+    font-weight: bold;
+}
+
+.collapsible {
+    color: white;
+    display:table-cell;
+    align-content: space-around;
+    vertical-align: middle;
+    border: .125rem solid #085ff7;
+    border-radius: 6.25rem;
+    background-color: #085ff7;
+    cursor: pointer;
+    padding: 12px;
+    margin-bottom: 10px;
+    padding-bottom: 35px;
+    text-align: center;
+    outline: none;
+    font-size: 15px;
+    height: 10px;
+  }
+  
+  .active, .collapsible:hover {
+    background-color: #555;
+  }
+  
+  .content {
+    padding: 0 18px;
+    display: none;
+    overflow: hidden;
+    background-color: #f1f1f1;
+  }
+>>>>>>> a6027ad9888d6ee4bebbe23ddd01e497d89bf08f

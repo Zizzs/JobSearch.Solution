@@ -38,7 +38,14 @@ Allows users to input a single search term and view results from several job sit
 
 ## Support and Contact Details
 
-_Email leilanileach@yahoo.com, vesalamanasa@gmail.com_
+
+_Leilani Leach: leilanileach@yahoo.com_
+
+_Manasa Vesala: vesalamanasa@gmail.com_
+
+_James Cho: hwisoocho@gmail.com_
+
+_Alex Williams: Zizzs17@gmail.com_
 
 ### License
 

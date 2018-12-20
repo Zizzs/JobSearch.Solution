@@ -5,22 +5,15 @@
 <div class="container">
   <ul class="nav nav-tabs nav-justified">
     <li><a class="nav-link" href = "/jobs/all">All</a></li>
-    <li><a class="nav-link" href = "/jobs/stackoverflow">Stack OverFlow</a></li>
-    <li><a class="nav-link" href = "/jobs/indeed">Indeed</a></li>
-    <li><a class="nav-link" href = "/jobs/glassdoor">GlassDoor</a></li>
-    <li><a class="nav-link" href = "/jobs/craigslist">Craigslist</a></li>
-    <li><a class="nav-link" href = "/jobs/monster">Monster</a></li>
+    <li><a class="nav-link" href = "/jobs/stackoverflow"><img class="logoAll" src="~/img/stackoverflow.png"></a></li>
+    <li><a class="nav-link" href = "/jobs/indeed"><img class="logoAll" src="~/img/indeed.png"></a></li>
+    <li><a class="nav-link" href = "/jobs/glassdoor"><img class="logoAll" src="~/img/glassdoor.png"></a></li>
+    <li><a class="nav-link" href = "/jobs/craigslist"><img class="logoAll" src="~/img/craigslist.png"></a></li>
+    <li><a class="nav-link" href = "/jobs/monster"><img class="logoAll" src="~/img/monsterlogo.png"></a></li>
   </ul>
 </div>
 <br>
-<div class="wrapperAll">
-  <div id="indeedLogo"><img class="logoAll" src="~/img/indeed.png"></div>
-  <div id="stackoverflowLogo"><img class="logoAll" src="~/img/stackoverflow.png"></div>
-  <div id="glassdoorLogo"><img class="logoAll" src="~/img/glassdoor.png"></div>
-  <div id="craigslistLogo"><img class="logoAll" src="~/img/craigslist.png"></div>
-  <div id="monsterLogo"><img class="logoAll" src="~/img/monsterlogo.png"></div>
-</div>
-<br>
+
 <br>
 <div class="wrapper">
   <div id="formLeft" class="formClass">
@@ -82,7 +75,7 @@
     {
       @foreach(IndeedClass job in @Model["indeed"])
         {
-          <a target="_blank" href="@job.GetUrl()"><p class="underlined underlined--gradient">@job.GetTitle()</p ></a>
+          <a target="_blank" class="exportLink" href="@job.GetUrl()"><p class="underlined underlined--gradient">@job.GetTitle()</p ></a>
         }
     }else
     {
@@ -96,7 +89,7 @@
     {
       @foreach(CraigslistClass job in @Model["craigslist"])
         {
-          <a class="exportLink" href="@job.GetUrl()"><p class="underlined underlined--gradient">@job.GetTitle()</p ></a>
+          <a class="exportLink"  class="exportLink" href="@job.GetUrl()"><p class="underlined underlined--gradient">@job.GetTitle()</p ></a>
         }
     }else
     {
